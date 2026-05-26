@@ -1,0 +1,6 @@
+{
+  "appId": "com.vyapar.smart",
+  "appName": "VyaparPro",
+  "webDir": "www",
+  "bundledWebRuntime": false
+}
