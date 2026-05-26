@@ -6,7 +6,6 @@
     <title>Vyapar PRO SMART</title>
     <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&family=Mukta:wght@500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        /* AAPKA PURANA CSS SAME TO SAME YAHAN HAI */
         :root { 
             --saffron: #FF6B00; --saffron-light: #FFF3E8; --saffron-dark: #CC5200; 
             --green: #00875A; --green-light: #E3F5EE; --blue: #1A56DB; --blue-light: #EBF0FF; 
@@ -24,6 +23,7 @@
         ::-webkit-scrollbar-track { background: var(--border-soft); } 
         ::-webkit-scrollbar-thumb { background: #C0C8E0; border-radius: 10px; } 
         
+        /* TOP BAR */
         .topbar { background: var(--ink); color: white; display: flex; align-items: center; justify-content: space-between; padding: 0 24px; height: 64px; position: sticky; top: 0; z-index: 100; gap: 12px; } 
         .brand { font-family: 'Baloo 2', cursive; font-size: 22px; font-weight: 800; color: white; display: flex; align-items: center; gap: 8px; } 
         .brand-badge { font-size: 10px; font-weight: 700; background: var(--saffron); color: white; padding: 2px 7px; border-radius: 20px; letter-spacing: 0.5px; } 
@@ -32,6 +32,7 @@
         .topbar-select { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); color: white; font-family: 'Mukta', sans-serif; font-size: 12px; font-weight: 600; padding: 6px 10px; border-radius: var(--radius-sm); cursor: pointer; outline: none; } 
         .topbar-select option { background: #222; } 
         
+        /* STRUCTURAL LAYOUT */
         .layout { display: flex; flex: 1; min-height: calc(100vh - 64px); position: relative; } 
         .sidebar { width: 240px; flex-shrink: 0; background: var(--card); border-right: 1px solid var(--border); display: flex; flex-direction: column; padding-bottom: 20px; } 
         .sidebar-section { padding: 14px 18px 4px; font-size: 11px; font-weight: 700; color: var(--ink-muted); text-transform: uppercase; letter-spacing: 0.8px; } 
@@ -45,6 +46,7 @@
         .tab-content.active { display: block; animation: fadeIn 0.2s ease-out; } 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } } 
         
+        /* MAIN COMPONENT GRIDS */
         .page-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; gap: 12px; } 
         .page-title { font-family: 'Baloo 2', cursive; font-size: 24px; font-weight: 800; color: var(--ink); line-height: 1.2; } 
         .page-sub { font-size: 13px; color: var(--ink-muted); margin-top: 2px; } 
@@ -54,6 +56,7 @@
         .card-title { font-family: 'Baloo 2', cursive; font-size: 16px; font-weight: 700; color: var(--ink); display: flex; align-items: center; gap: 8px; } 
         .card-body { padding: 20px; } 
         
+        /* RESPONSIVE CSS GRIDS */
         .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-bottom: 24px; } 
         .stat-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 20px; display: flex; align-items: center; justify-content: space-between; box-shadow: var(--shadow); position: relative; overflow: hidden; } 
         .stat-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; } 
@@ -73,6 +76,7 @@
         .grid-3-2 { display: grid; grid-template-columns: 1.2fr 1.8fr; gap: 20px; align-items: start; } 
         .grid-dashboard { display: grid; grid-template-columns: 1.1fr 1.9fr; gap: 20px; } 
 
+        /* FORMS & CONTROLS */
         .form-group { margin-bottom: 16px; } 
         .form-label { display: block; font-size: 12px; font-weight: 700; color: var(--ink-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; } 
         .form-input, .form-select { width: 100%; padding: 10px 14px; font-family: 'Mukta', sans-serif; font-size: 14px; font-weight: 600; color: var(--ink); background: white; border: 1.5px solid var(--border); border-radius: var(--radius-sm); transition: border-color 0.2s, box-shadow 0.2s; outline: none; } 
@@ -81,6 +85,7 @@
         .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; } 
         .form-row-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; } 
         
+        /* BUTTONS */
         .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 10px 20px; font-family: 'Mukta', sans-serif; font-size: 14px; font-weight: 700; border: none; border-radius: var(--radius-sm); cursor: pointer; transition: all 0.15s; white-space: nowrap; text-decoration: none; } 
         .btn-green { background: var(--green); color: white; } 
         .btn-green:hover { background: #006644; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,135,90,0.2); } 
@@ -98,6 +103,7 @@
         .btn-whatsapp { background: var(--whatsapp); color: white; }
         .btn-whatsapp:hover { background: #1ebea5; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(37,211,102,0.2); }
         
+        /* SCROLLABLE TABLES */
         .table-wrap { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 4px; border-radius: var(--radius-sm); border: 1px solid var(--border-soft); } 
         table { width: 100%; border-collapse: collapse; font-size: 13.5px; text-align: left; min-width: 500px; } 
         thead th { background: var(--surface); color: var(--ink-muted); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; padding: 12px 16px; border-bottom: 2px solid var(--border); white-space: nowrap; } 
@@ -114,11 +120,13 @@
         .section-divider { font-size: 11px; font-weight: 700; color: var(--ink-muted); text-transform: uppercase; letter-spacing: 0.6px; margin: 18px 0 12px; display: flex; align-items: center; gap: 8px; } 
         .section-divider::after { content: ''; flex: 1; height: 1px; background: var(--border); } 
         
+        /* INTERACTIVE TOGGLE BUTTONS */
         .radio-toggle { display: flex; background: var(--surface); padding: 4px; border-radius: var(--radius-sm); gap: 4px; margin-bottom: 12px; width: 100%; }
         .radio-toggle label { flex: 1; text-align: center; padding: 8px; font-size: 13px; font-weight: 700; color: var(--ink-soft); cursor: pointer; border-radius: 6px; transition: background 0.2s, color 0.2s; white-space: nowrap; }
         .radio-toggle input { display: none; }
         .radio-toggle input:checked + label { background: white; color: var(--blue); box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
         
+        /* MODALS */
         .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(10,10,30,0.6); z-index: 200; align-items: center; justify-content: center; padding: 16px; overflow-y: auto; } 
         .modal-overlay.open { display: flex; } 
         .modal-box { background: white; border-radius: var(--radius); box-shadow: var(--shadow-lg); width: 100%; max-width: 540px; display: flex; flex-direction: column; max-height: 90vh; overflow: hidden; animation: modalIn 0.2s cubic-bezier(.25,1,.5,1); } 
@@ -130,9 +138,11 @@
         .modal-body { padding: 20px; overflow-y: auto; flex: 1; } 
         .modal-footer { padding: 14px 20px; border-top: 1px solid var(--border-soft); display: flex; gap: 12px; justify-content: flex-end; flex-shrink: 0; } 
         
+        /* TOAST SYSTEM */
         #toast { position: fixed; bottom: 24px; right: 24px; background: var(--ink); color: white; padding: 12px 20px; border-radius: var(--radius-sm); font-size: 14px; font-weight: 600; z-index: 999; display: none; align-items: center; gap: 10px; box-shadow: var(--shadow-lg); max-width: calc(100vw - 48px); animation: fadeIn 0.15s ease; } 
         #toast.show { display: flex; } 
 
+        /* INVOICE STYLING */
         .print-bill { background: white; border-radius: var(--radius-sm); border: 1px solid var(--border); width: 100%; } 
         .bill-header { text-align: center; padding: 16px; border-bottom: 2px dashed var(--border); } 
         .bill-total { display: flex; flex-direction: column; align-items: flex-end; padding: 14px 16px; gap: 4px; border-top: 2px dashed var(--border); } 
@@ -142,17 +152,47 @@
         .empty-state { text-align: center; padding: 24px 12px; color: var(--ink-muted); font-weight: 600; font-size: 13px; }
         .low-stock-list { list-style: none; }
         
+        /* MOBILE BOTTOM NAVIGATION BAR */
         .mobile-bottom-nav { 
-            display: none; position: fixed; bottom: 0; left: 0; right: 0; height: 60px; background: var(--card); border-top: 1px solid var(--border); z-index: 150; align-items: center; padding: 0 8px; box-shadow: 0 -4px 16px rgba(0,0,0,0.04); overflow-x: auto; white-space: nowrap; -webkit-overflow-scrolling: touch; 
+            display: none; 
+            position: fixed; 
+            bottom: 0; 
+            left: 0; 
+            right: 0; 
+            height: 60px; 
+            background: var(--card); 
+            border-top: 1px solid var(--border); 
+            z-index: 150; 
+            align-items: center; 
+            padding: 0 8px; 
+            box-shadow: 0 -4px 16px rgba(0,0,0,0.04); 
+            overflow-x: auto;                  
+            white-space: nowrap;               
+            -webkit-overflow-scrolling: touch; 
         }
         .mobile-bottom-nav::-webkit-scrollbar { display: none; } 
         
         .mobile-nav-btn { 
-            display: inline-flex; flex-direction: column; align-items: center; justify-content: center; background: none; border: none; color: var(--ink-soft); font-family: 'Mukta', sans-serif; font-size: 11px; font-weight: 600; padding: 0 16px; height: 100%; cursor: pointer; gap: 2px; flex-shrink: 0; 
+            display: inline-flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; 
+            background: none; 
+            border: none; 
+            color: var(--ink-soft); 
+            font-family: 'Mukta', sans-serif; 
+            font-size: 11px; 
+            font-weight: 600; 
+            padding: 0 16px;                   
+            height: 100%; 
+            cursor: pointer; 
+            gap: 2px; 
+            flex-shrink: 0;                    
         }
         .mobile-nav-btn .m-nav-icon { font-size: 18px; line-height: 1; }
         .mobile-nav-btn.active { color: var(--blue); font-weight: 700; }
 
+        /* RESPONSIVE BREAKPOINTS */
         @media (max-width: 1024px) { .grid-3-2 { grid-template-columns: 1fr; } }
         @media (max-width: 768px) { 
             .sidebar { display: none; } 
@@ -193,6 +233,7 @@
     </style>
 </head>
 <body>
+
     <div class="topbar">
         <div class="brand">📈 Vyapar PRO <span class="brand-badge">SMART</span></div>
         <div class="topbar-right">
@@ -211,50 +252,572 @@
         </div>
     </div>
 
+    <div class="layout">
+        <div class="sidebar">
+            <div class="sidebar-section" data-key="menu">Menu</div>
+            <button class="nav-btn active" id="btn-dashboard" onclick="switchTab('dashboard')"><span class="nav-icon">📊</span><span data-key="nav_dash">Dashboard</span></button>
+            <div class="sidebar-section" data-key="ops">Operations</div>
+            <button class="nav-btn" id="btn-sell" onclick="switchTab('sell')"><span class="nav-icon">🧾</span><span data-key="nav_bill">New Bill / Sale</span></button>
+            <button class="nav-btn" id="btn-inventory" onclick="switchTab('inventory')"><span class="nav-icon">📦</span><span id="nav-stock-label" data-key="nav_stock">Product Stock</span></button>
+            <button class="nav-btn" id="btn-udhar" onclick="switchTab('udhar')"><span class="nav-icon">📑</span><span data-key="nav_khata">Udhar Khata</span></button>
+            <button class="nav-btn" id="btn-expenses" onclick="switchTab('expenses')"><span class="nav-icon">💸</span><span data-key="nav_exp">Expenses</span></button>
+            <div class="sidebar-section" data-key="reports">Reports</div>
+            <button class="nav-btn" id="btn-pl" onclick="switchTab('pl')"><span class="nav-icon">📈</span><span data-key="nav_pl">Profit & Loss</span></button>
+            <div class="sidebar-section">System</div>
+            <button class="nav-btn" id="btn-settings" onclick="switchTab('settings')"><span class="nav-icon">⚙️</span><span>Settings Profile</span></button>
+        </div>
+
+        <div class="mobile-bottom-nav">
+            <button class="mobile-nav-btn active" id="m-btn-dashboard" onclick="switchTab('dashboard')"><span class="m-nav-icon">📊</span><span data-key="nav_dash">Dash</span></button>
+            <button class="mobile-nav-btn" id="m-btn-sell" onclick="switchTab('sell')"><span class="m-nav-icon">🧾</span><span data-key="nav_bill">Bill</span></button>
+            <button class="mobile-nav-btn" id="m-btn-inventory" onclick="switchTab('inventory')"><span class="m-nav-icon">📦</span><span data-key="nav_stock">Stock</span></button>
+            <button class="mobile-nav-btn" id="m-btn-udhar" onclick="switchTab('udhar')"><span class="m-nav-icon">📑</span><span data-key="nav_khata">Khata</span></button>
+            <button class="mobile-nav-btn" id="m-btn-expenses" onclick="switchTab('expenses')"><span class="m-nav-icon">💸</span><span data-key="nav_exp">Exp</span></button>
+            <button class="mobile-nav-btn" id="m-btn-pl" onclick="switchTab('pl')"><span class="m-nav-icon">📈</span><span data-key="nav_pl">P&L</span></button>
+            <button class="mobile-nav-btn" id="m-btn-settings" onclick="switchTab('settings')"><span class="m-nav-icon">⚙️</span><span>Setup</span></button>
+        </div>
+
+        <div class="main">
+            <div id="tab-dashboard" class="tab-content active">
+                <div class="page-header">
+                    <div>
+                        <h2 class="page-title" data-key="dash_title">Dashboard Overview</h2>
+                        <p class="page-sub" id="dash-industry-sub">Rupali Store | FY 2026-2027</p>
+                    </div>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-card stat-green">
+                        <div><div class="stat-label" data-key="st_sales">Total Sales (Paid)</div><div class="stat-value" id="dash-sales">₹0.00</div></div>
+                        <span class="stat-icon">💰</span>
+                    </div>
+                    <div class="stat-card stat-amber">
+                        <div><div class="stat-label" data-key="st_due">Udhar Baki (Due)</div><div class="stat-value" id="dash-lena">₹0.00</div></div>
+                        <span class="stat-icon">🤝</span>
+                    </div>
+                    <div class="stat-card stat-blue">
+                        <div><div class="stat-label" data-key="st_profit">Net Profit</div><div class="stat-value" id="dash-profit">🔒 Locked</div></div>
+                        <span class="stat-icon">📈</span>
+                    </div>
+                </div>
+                <div class="grid-dashboard">
+                    <div class="card">
+                        <div class="card-header"><div class="card-title">⚠️ <span data-key="dash_low">Low Stock Alert</span></div></div>
+                        <div class="card-body"><ul class="low-stock-list" id="dash-low-list"></ul></div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header"><div class="card-title">🛒 <span data-key="dash_recent">Recent Bills</span></div></div>
+                        <div class="card-body" id="dash-sales-list"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="tab-sell" class="tab-content">
+                <div class="grid-3-2">
+                    <div class="card">
+                        <div class="card-header"><div class="card-title">🧾 <span data-key="bill_entry">New Bill Entry</span></div></div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label class="form-label">Phonebook / Existing Account से चुनें</label>
+                                <select id="bill-cust-dropdown" class="form-select" onchange="fillCustomerFromDropdown()"></select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" data-key="c_name">Customer Name</label>
+                                <input type="text" id="cust-name" class="form-input">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label" data-key="c_phone">Phone Number</label>
+                                    <input type="text" id="cust-phone" class="form-input" value="+91">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Bill No.</label>
+                                    <input type="text" id="cust-billno" class="form-input" readonly>
+                                </div>
+                            </div>
+                            <div class="section-divider" data-key="add_items">Add Items</div>
+                            <div class="form-group">
+                                <label class="form-label" data-key="p_select">Select Product</label>
+                                <select id="s-id" class="form-select" onchange="updateSellItem()"></select>
+                            </div>
+                            <div class="form-row-3">
+                                <div class="form-group">
+                                    <label class="form-label" data-key="p_rate">Rate (₹)</label>
+                                    <input type="number" id="s-price" class="form-input" readonly>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" data-key="p_avail">Available</label>
+                                    <input type="text" id="s-avail" class="form-input" readonly>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" data-key="p_qty">Quantity</label>
+                                    <input type="number" id="s-qty" class="form-input" step="any">
+                                </div>
+                            </div>
+                            <button class="btn btn-blue btn-full" onclick="addItemToBill()" data-key="btn-add">+ Add Item</button>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header"><div class="card-title">🧾 <span data-key="bill_prev">Bill Preview</span></div></div>
+                        <div class="card-body">
+                            <div class="table-wrap">
+                                <table style="margin-bottom:15px;">
+                                    <thead>
+                                        <tr><th>#</th><th data-key="t_item">Item</th><th data-key="t_qty">Qty</th><th data-key="t_rate">Rate</th><th data-key="t_amt">Amount</th><th></th></tr>
+                                    </thead>
+                                    <tbody id="bill-items-body"></tbody>
+                                </table>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" style="color:var(--saffron);">Discount Amount (₹)</label>
+                                <input type="number" id="bill-discount" class="form-input" placeholder="Enter discount in ₹" value="0" oninput="updateBillGrandTotalDisplay()">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" data-key="pay_type">Payment Type</label>
+                                <select id="payment-type" class="form-select">
+                                    <option value="cash">💵 Cash</option>
+                                    <option value="upi">📱 UPI / Online</option>
+                                    <option value="udhar">🤝 Udhar (Credit)</option>
+                                </select>
+                            </div>
+                            <div style="margin-bottom: 15px; padding: 12px; background: var(--surface); border-radius: var(--radius-sm); text-align: right;">
+                                <span style="font-weight: 700; font-size: 14px;">Total Payable: </span>
+                                <span id="bill-grand-total-display" style="font-family: 'Baloo 2', cursive; font-size: 18px; font-weight: 800; color: var(--green);">₹0.00</span>
+                            </div>
+                            <button class="btn btn-green btn-full" onclick="saveBill()" data-key="btn_save_bill">✅ Confirm & Save Bill</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card" style="margin-top:20px;">
+                    <div class="card-header"><div class="card-title">📋 <span data-key="recent_saved_bills">Saved Bills</span></div></div>
+                    <div class="card-body">
+                        <div class="table-wrap">
+                            <table>
+                                <thead>
+                                    <tr><th>Bill No</th><th data-key="t_cust">Customer</th><th data-key="t_items">Items</th><th data-key="t_amt">Amount</th><th data-key="pay_type">Payment</th><th data-key="t_action">Action</th></tr>
+                                </thead>
+                                <tbody id="sales-table-body"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="tab-inventory" class="tab-content">
+                <div class="grid-3-2">
+                    <div class="card">
+                        <div class="card-header"><div class="card-title">➕ <span data-key="add_new_prod">Add New Product</span></div></div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label class="form-label" data-key="p_name_lbl">Product Name</label>
+                                <input type="text" id="p-name" class="form-input">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label" data-key="p_sale_lbl">Sale Price (₹)</label>
+                                    <input type="number" id="p-price" class="form-input">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" style="color:var(--red);">🔐 Cost Price (₹) [Owner]</label>
+                                    <div style="display:flex; gap:6px;">
+                                        <input type="number" id="p-cost" class="form-input" placeholder="Unlock code" readonly>
+                                        <button class="btn btn-ghost btn-sm" id="btn-lock-cost" onclick="unlockCostField()">🔓</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label" data-key="p_stock_lbl">Opening Stock</label>
+                                    <input type="number" id="p-stock" class="form-input" step="any">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" data-key="p_unit_lbl">Unit Type</label>
+                                    <select id="p-unit" class="form-select">
+                                        <option value="Pcs">Pcs (नग)</option>
+                                        <option value="Kg">Kg (किलोग्राम)</option>
+                                        <option value="Gram">Gram (ग्राम)</option>
+                                        <option value="Litre">Litre (लीटर)</option>
+                                        <option value="Packet">Packet</option>
+                                        <option value="Box">Box</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" data-key="p_limit_lbl">Low Stock Limit</label>
+                                <input type="number" id="p-limit" class="form-input" value="5">
+                            </div>
+                            <button class="btn btn-saffron btn-full" onclick="saveProduct()" data-key="btn_save_prod">💾 Save Product</button>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header"><div class="card-title">📦 <span data-key="prod_list">Product List</span></div></div>
+                        <div class="card-body">
+                            <div class="table-wrap">
+                                <table>
+                                    <thead>
+                                        <tr><th data-key="t_item">Product Name</th><th data-key="p_sale_lbl">Sale Price</th><th>Cost Price</th><th data-key="nav_stock">Stock</th><th data-key="p_unit_lbl">Unit</th><th>Status</th><th data-key="t_action">Action</th></tr>
+                                    </thead>
+                                    <tbody id="product-table-body"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="tab-udhar" class="tab-content">
+                <div class="grid-3-2">
+                    <div class="card">
+                        <div class="card-header"><div class="card-title">📝 <span data-key="khata_entry">New Ledger Entry</span></div></div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label class="form-label">Profile Selector</label>
+                                <div class="radio-toggle">
+                                    <input type="radio" id="profile-new" name="profile-type" value="new" checked onchange="toggleKhataProfileMode()">
+                                    <label for="profile-new">👤 New Profile</label>
+                                    <input type="radio" id="profile-existing" name="profile-type" value="existing" onchange="toggleKhataProfileMode()">
+                                    <label for="profile-existing">🔍 Existing Customer</label>
+                                </div>
+                            </div>
+
+                            <div class="form-group" id="khata-name-input-wrap">
+                                <label class="form-label" data-key="v_name">Customer / Vendor Name</label>
+                                <input type="text" id="k-name" class="form-input" placeholder="Type name manually">
+                            </div>
+
+                            <div class="form-group" id="khata-name-select-wrap" style="display:none;">
+                                <label class="form-label">Select Active Khata Account</label>
+                                <select id="k-name-dropdown" class="form-select" onchange="handleKhataDropdownChange()"></select>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label" data-key="c_phone">Phone (Optional)</label>
+                                <input type="text" id="k-phone" class="form-input" value="+91">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label" data-key="trans_type">Transaction Type</label>
+                                    <select id="k-type" class="form-select">
+                                        <option value="lena">💰 Paise LENA hai (Receivable)</option>
+                                        <option value="dena">💸 Paise DENA hai (Payable)</option>
+                                        <option value="received">✅ Udhar RECEIVED (Paise Mile)</option>
+                                        <option value="paid">❌ Udhar PAID (Kishi ko Diye)</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" data-key="t_amt">Amount (₹)</label>
+                                    <input type="number" id="k-amount" class="form-input">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Note / Reason</label>
+                                <input type="text" id="k-note" class="form-input">
+                            </div>
+                            <button class="btn btn-green btn-full" onclick="saveKhata()" data-key="btn_save_khata">✅ Entry Save Karein</button>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header"><div class="card-title">📋 <span data-key="nav_khata">Khata Ledger</span> (<span id="ledger-summary" style="color:var(--blue); font-size:12px;">Lena: ₹0 | Dena: ₹0</span>)</div></div>
+                        <div class="card-body">
+                            <div class="table-wrap">
+                                <table>
+                                    <thead>
+                                        <tr><th data-key="t_cust">Name</th><th data-key="c_phone">Phone</th><th data-key="trans_type">Type</th><th data-key="t_amt">Amount</th><th>Note</th><th data-key="t_action">Action</th></tr>
+                                    </thead>
+                                    <tbody id="khata-table-body"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="tab-expenses" class="tab-content">
+                <div class="grid-3-2">
+                    <div class="card">
+                        <div class="card-header"><div class="card-title">➕ <span data-key="nav_exp">Add Expense</span></div></div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label class="form-label">Category</label>
+                                <select id="e-category" class="form-select">
+                                    <option value="Staff Salary">👨‍💼 Staff Salary</option>
+                                    <option value="Electricity Bill">⚡ Electricity Bill</option>
+                                    <option value="Transportation">🚚 Transportation</option>
+                                    <option value="Rent">🏢 Rent</option>
+                                    <option value="Others">📦 Others</option>
+                                </select>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label" data-key="t_amt">Amount (₹)</label>
+                                    <input type="number" id="e-amount" class="form-input">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Date</label>
+                                    <input type="date" id="e-date" class="form-input">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Note / Reason</label>
+                                <input type="text" id="e-note" class="form-input">
+                            </div>
+                            <button class="btn btn-red btn-full" onclick="saveExpense()">💸 Kharcha Log Karein</button>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header"><div class="card-title">📋 <span data-key="nav_exp">Expenses List</span> (<span id="expense-total" style="color:var(--red); font-size:12px;">Total: ₹0</span>)</div></div>
+                        <div class="card-body">
+                            <div class="table-wrap">
+                                <table>
+                                    <thead>
+                                        <tr><th>Category</th><th data-key="t_amt">Amount</th><th>Note</th><th>Date</th><th data-key="t_action">Action</th></tr>
+                                    </thead>
+                                    <tbody id="expense-table-body"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="tab-pl" class="tab-content">
+                <div class="card" id="pl-locked">
+                    <div class="card-body" style="text-align:center; padding:40px 16px;">
+                        <span style="font-size:48px;">🔒</span>
+                        <h3 style="margin:16px 0 6px;" data-key="pl_locked_title">Report Locked Securely</h3>
+                        <p style="color:var(--ink-muted); margin-bottom:20px; font-size:13px;" data-key="pl_pin_msg">Enter Owner PIN to check financial health</p>
+                        <div style="max-width:240px; margin:0 auto 16px;">
+                            <input type="password" id="pl-pin" class="form-input" placeholder="Enter Owner PIN" style="text-align:center; font-size:16px; letter-spacing:4px;">
+                        </div>
+                        <button class="btn btn-blue" onclick="unlockPL()" data-key="unlock">🔓 Unlock Report</button>
+                    </div>
+                </div>
+                
+                <div id="pl-content" style="display:none;">
+                    <div class="card" style="border: 1px solid var(--blue); background: #FCFDFF;">
+                        <div class="card-header" style="background: var(--blue-light); border-bottom: 1px solid var(--border);">
+                            <div class="card-title" style="color: var(--blue);">📅 Report Configuration & Date Filters</div>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label class="form-label">Calculation Range Selector</label>
+                                <div class="radio-toggle">
+                                    <input type="radio" id="pl-range-all" name="pl-range-type" value="all" checked onchange="togglePLDateMode()">
+                                    <label for="pl-range-all">🔄 Cumulative View (Pehle Se)</label>
+                                    <input type="radio" id="pl-range-custom" name="pl-range-type" value="custom" onchange="togglePLDateMode()">
+                                    <label for="pl-range-custom">📅 Particular Date Range</label>
+                                </div>
+                            </div>
+                            <div class="form-row" id="pl-date-pickers-row" style="display: none;">
+                                <div class="form-group">
+                                    <label class="form-label">Start Date</label>
+                                    <input type="date" id="pl-start-date" class="form-input" onchange="calculateAndDisplayPL()">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">End Date</label>
+                                    <input type="date" id="pl-end-date" class="form-input" onchange="calculateAndDisplayPL()">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card" style="border: 1.5px solid var(--saffron);">
+                        <div class="card-header" style="background: var(--saffron-light);">
+                            <div class="card-title" style="color: var(--saffron-dark);">⚙️ Owner Desk: External Structural Cost / Bulk Purchase</div>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-row-3" style="align-items: flex-end;">
+                                <div class="form-group">
+                                    <label class="form-label">Extra Procurement Cost (₹)</label>
+                                    <input type="number" id="pl-manual-cost-input" class="form-input" placeholder="e.g. 5000">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Description / Bill Ref</label>
+                                    <input type="text" id="pl-manual-cost-note" class="form-input" placeholder="e.g. Bulk Setup">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Cost Date</label>
+                                    <input type="date" id="pl-manual-cost-date" class="form-input">
+                                </div>
+                            </div>
+                            <button class="btn btn-saffron" style="margin-top:10px; width:100%;" onclick="injectManualCost()">➕ Inject Cost to Ledger</button>
+                        </div>
+                    </div>
+
+                    <div class="stats-grid">
+                        <div class="stat-card stat-green"><div><div class="stat-label">Sales Revenue</div><div class="stat-value" id="pl-revenue">₹0</div></div></div>
+                        <div class="stat-card stat-red"><div><div class="stat-label">Total Deductions / Costs</div><div class="stat-value" id="pl-expenses">₹0</div></div></div>
+                        <div class="stat-card stat-blue" id="pl-net-card"><div><div class="stat-label">Calculated Net Profit</div><div class="stat-value" id="pl-net">₹0</div></div></div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header"><div class="card-title">📊 Detailed Financial Balance Sheets</div></div>
+                        <div class="card-body">
+                            <div class="table-wrap">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Ledger Ledger Metric Entity Name</th>
+                                            <th>Computed Balance Ledger Value</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="pl-table"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="tab-settings" class="tab-content">
+                <div class="card" id="settings-locked" style="max-width: 450px; margin: 40px auto; text-align: center;">
+                    <div class="card-body" style="padding: 40px 20px;">
+                        <span style="font-size:48px;">🔒</span>
+                        <h3 style="margin:16px 0 6px;">Setup Page Locked</h3>
+                        <p style="color:var(--ink-muted); margin-bottom:20px; font-size:13px;">Kripya Setup Profile open karne ke liye Owner PIN enter karein</p>
+                        <div style="margin-bottom: 16px;">
+                            <input type="password" id="settings-gate-pin" class="form-input" placeholder="Enter Owner PIN" style="text-align:center; font-size:16px; letter-spacing:4px;">
+                        </div>
+                        <button class="btn btn-blue btn-full" onclick="unlockSettingsPage()">🔓 Access Setup Page</button>
+                    </div>
+                </div>
+
+                <div id="settings-content" style="display:none;">
+                    <div class="page-header">
+                        <div>
+                            <h2 class="page-title">⚙️ Business Configuration & Profile</h2>
+                            <p class="page-sub">Manage Shop Identity, Billing Footers and Security Keys</p>
+                        </div>
+                        <div>
+                            <button class="btn btn-ghost btn-sm" onclick="lockSettingsPage()">🔒 Lock Page</button>
+                        </div>
+                    </div>
+                    
+                    <div class="grid-2">
+                        <div class="card">
+                            <div class="card-header"><div class="card-title">🏪 Shop Identity Card</div></div>
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label class="form-label">Registered Shop / Brand Name</label>
+                                    <input type="text" id="cfg-shop-name" class="form-input" placeholder="e.g. Rupali Spice Junction">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Contact Mobile / Phone No</label>
+                                    <input type="text" id="cfg-shop-phone" class="form-input" placeholder="e.g. +91 9876543210">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Full Outlet Address (Printed on Invoice)</label>
+                                    <input type="text" id="cfg-shop-address" class="form-input" placeholder="e.g. Ward No. 4, Main Market, Bongaigaon">
+                                </div>
+                                <button class="btn btn-green btn-full" onclick="saveShopProfile()">💾 Update Profile Details</button>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header"><div class="card-title">🔒 System Access Security</div></div>
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label class="form-label" style="color:var(--blue);">🔑 Modify Owner Desk Password PIN</label>
+                                    <input type="password" id="cfg-owner-pin" class="form-input" placeholder="Current: 1234" maxlength="8">
+                                </div>
+                                <div class="divider"></div>
+                                <div class="form-group">
+                                    <label class="form-label" style="color:var(--amber);">🔑 Modify Manager PIN</label>
+                                    <input type="password" id="cfg-manager-pin" class="form-input" placeholder="Current: 5555" maxlength="8">
+                                </div>
+                                <button class="btn btn-blue btn-full" onclick="saveSecurityKeys()">⚡ Reset Security PINs</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="print-modal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3 class="modal-title">🖨️ Bill Print Preview</h3>
+                <button class="modal-close" onclick="closePrintModal()">✕</button>
+            </div>
+            <div class="modal-body">
+                <div id="print-invoice-area"></div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-ghost" onclick="closePrintModal()">Cancel</button>
+                <button class="btn btn-whatsapp" id="modal-whatsapp-btn" target="_blank">💬 WhatsApp Share</button>
+                <button class="btn btn-green" onclick="window.print()">🖨️ Print / Save PDF</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="edit-bill-modal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3 class="modal-title">✏️ Edit Bill Details</h3>
+                <button class="modal-close" onclick="closeEditModal()">✕</button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="edit-bill-id">
+                <div class="form-group">
+                    <label class="form-label">Customer Name</label>
+                    <input type="text" id="edit-bill-name" class="form-input">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Total Amount (₹)</label>
+                    <input type="number" id="edit-bill-total" class="form-input">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Payment Mode</label>
+                    <select id="edit-bill-payment" class="form-select">
+                        <option value="cash">💵 Cash</option>
+                        <option value="upi">📱 UPI</option>
+                        <option value="udhar">🤝 Udhar</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-ghost" onclick="closeEditModal()">Cancel</button>
+                <button class="btn btn-blue" onclick="saveEditedBill()">💾 Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="edit-cost-modal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3 class="modal-title">✏️ Update Product Prices</h3>
+                <button class="modal-close" onclick="closeCostModal()">✕</button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="edit-prod-id">
+                <div class="form-group">
+                    <label class="form-label">Product Name</label>
+                    <input type="text" id="edit-prod-name" class="form-input" readonly>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Sale Price (₹)</label>
+                    <input type="number" id="edit-prod-price" class="form-input">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" style="color:var(--red);">🔐 Cost Price (₹)</label>
+                    <input type="number" id="edit-prod-cost" class="form-input" placeholder="Enter Cost Price">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-ghost" onclick="closeCostModal()">Cancel</button>
+                <button class="btn btn-green" onclick="saveEditedCost()">💾 Update Prices</button>
+            </div>
+        </div>
+    </div>
+
     <div id="toast">✅ Action Successful</div>
 
-    <script>
-        // ==========================================
-        // 1. ADDED: SQLITE DATABASE VARIABLES
-        // ==========================================
-        let sqliteDb = null;
-        
-        // ==========================================
-        // 2. ADDED: SQLITE INITIALIZATION FUNCTION
-        // ==========================================
-        async function initSQLite() {
-            try {
-                // Check if running inside Capacitor with SQLite plugin
-                if (window.Capacitor && window.Capacitor.Plugins.CapacitorSQLite) {
-                    const sqlite = window.Capacitor.Plugins.CapacitorSQLite;
-                    
-                    // Create Connection
-                    sqliteDb = await sqlite.createConnection({
-                        database: "vyapar_pro_db",
-                        version: 1,
-                        encrypted: false,
-                        mode: "no-encryption"
-                    });
-                    
-                    await sqliteDb.open();
-                    
-                    // Create Tables to match your data structure
-                    const query = `
-                        CREATE TABLE IF NOT EXISTS products (id INTEGER PRIMARY KEY, name TEXT, price REAL, cost REAL, stock REAL, unit TEXT, limit_val REAL);
-                        CREATE TABLE IF NOT EXISTS sales (id INTEGER PRIMARY KEY, billNo TEXT, custName TEXT, custPhone TEXT, total REAL, payment TEXT, date TEXT, items_json TEXT);
-                        CREATE TABLE IF NOT EXISTS khata (id INTEGER PRIMARY KEY, name TEXT, phone TEXT, type TEXT, amount REAL, note TEXT, date TEXT);
-                        CREATE TABLE IF NOT EXISTS expenses (id INTEGER PRIMARY KEY, category TEXT, amount REAL, note TEXT, date TEXT);
-                    `;
-                    await sqliteDb.execute({ statements: query });
-                    
-                    console.log("✅ SQLite Database Ready!");
-                } else {
-                    console.warn("⚠️ SQLite Plugin not found. App running in Web Browser Mode (LocalStorage Fallback).");
-                }
-            } catch (error) {
-                console.error("❌ SQLite Error: ", error);
-            }
-        }
+    <script type="module">
+        import { Capacitor } from '@capacitor/core';
+        import { CapacitorSQLite, SQLiteConnection } from '@capacitor-community/sqlite';
+
+        const sqlite = new SQLiteConnection(CapacitorSQLite);
+        let db = null;
 
         const langData = {
             en: {
@@ -273,17 +836,31 @@
                 add_new_prod: "नया प्रोडक्ट जोड़ें", p_name_lbl: "प्रोडक्ट का नाम", p_sale_lbl: "बिक्री मूल्य (₹)", p_stock_lbl: "शुरुआती स्टॉक", p_unit_lbl: "यूनิต प्रकार", p_limit_lbl: "लो स्टॉक लिमिट", btn_save_prod: "प्रोडक्ट सुरक्षित करें", prod_list: "स्टॉक सूची",
                 khata_entry: "खाता बही नई एंट्री", v_name: "ग्राहक / व्यापारी नाम", trans_type: "लेनदेन प्रकार", btn_save_khata: "एंट्री सुरक्षित करें", pl_locked_title: "रिपोर्ट लॉक है", pl_pin_msg: "मालिक का पिन दर्ज करें", unlock: "अनलॉक रिपोर्ट"
             },
-            // ... (Aapki Baki Languages as-it-is rahengi)
+            as: {
+                menu: "মেনু", ops: "অপাৰেচন", reports: "ৰিপৰ্টসমূহ", nav_dash: "ড্যাশবৰ্ড", nav_bill: "নতুন বিল", nav_stock: "সামগ্ৰীৰ মজুত", nav_khata: "উধাৰ খাতা", nav_exp: "খৰচ বুক", nav_pl: "লাভ লোকচান ৰিপৰ্ট",
+                dash_title: "ড্যাশবৰ্ড অবৰভিউ", st_sales: "মুঠ বিক্ৰী (নগদ)", st_due: "মুঠ বাকী উধাৰ", st_profit: "নিকা লাভ", dash_low: "কম ষ্টক সতৰ্কতা", dash_recent: "শেহতীয়া বিলসমূহ", bill_entry: "নতুন বিল এন্ট্ৰী",
+                c_name: "গ্ৰাহকৰ নাম", c_phone: "ফোন নম্বৰ", add_items: "सामान যোগ কৰক", p_select: "সামগ্ৰী বাছনি কৰক", p_rate: "দৰ (₹)", p_avail: "মজুত আছে", p_qty: "পৰিমাণ / ওজন", "btn-add": "+ সামগ্ৰী যোগ কৰক", bill_prev: "বিল প্ৰিভিউ",
+                t_item: "সামগ্ৰী", t_qty: "পৰিমাণ", t_rate: "দৰ", t_amt: "টকা", pay_type: "পৰিশোধৰ মাধ্যম", btn_save_bill: "ৰংগালী বিহু অফাৰ বিল সংৰক্ষণ কৰক", recent_saved_bills: "সংৰক্ষিত বিলসমূহ", t_cust: "গ্ৰাহক", t_items: "আইটেম", t_action: "ব্যৱস্থা",
+                add_new_prod: "নতুন সামগ্ৰী ভৰাওক", p_name_lbl: "সামগ্ৰীৰ নাম", p_sale_lbl: "বিক্ৰী মূল্য (₹)", p_stock_lbl: "প্ৰাৰম্ভিক ষ্টক", p_unit_lbl: "ইউনিট টাইপ", p_limit_lbl: "ষ্টকৰ সৰ্বনিম্ন সীমা", btn_save_prod: "সামগ্ৰী সংৰক্ষণ কৰক", prod_list: "সামগ্ৰীৰ তালিকা",
+                khata_entry: "খাতাৰ নতুন এন্ট্ৰী", v_name: "গ্ৰাহক / ব্যৱসায়ীৰ নাম", trans_type: "লেনদেনৰ প্ৰকাৰ", btn_save_khata: "এন্ট্ৰী সংৰক্ষণ কৰক", pl_locked_title: "ৰিপৰ্ট সুৰক্ষিতভাৱে বন্ধ আছে", pl_pin_msg: "মালিকৰ PIN সুমুৱাওক", unlock: "ৰিপৰ্ট খোলक"
+            },
+            bn: {
+                menu: "মেনু", ops: "অপারেশন", reports: "রিপোর্ট", nav_dash: "ড্যাশবোর্ড", nav_bill: "নতুন বিল", nav_stock: "পণ্য স্টক", nav_khata: "উধার খাতা", nav_exp: "খরচ", nav_pl: "লাভ ক্ষতি",
+                dash_title: "ড্যাশবোর্ড Overview", st_sales: "মোট নগদ বিক্রি", st_due: "মোট বাকি উধার", st_profit: "নিট লাভ", dash_low: "কম স্টক অ্যালার্ট", dash_recent: "সাম্প্রতিক বিল", bill_entry: "নতুন bill এন্ট্রি",
+                c_name: "ক্রেতার নাম", c_phone: "ফোন নম্বর", add_items: "আইটেম যোগ করুন", p_select: "পণ্য নির্বাচন করুন", p_rate: "রেট (₹)", p_avail: "مজუდ আছে", p_qty: "পরিমাণ / ওজন", "btn-add": "+ আইটেম যোগ করুন", bill_prev: "বিল প্রিভিউ",
+                t_item: "পণ্য", t_qty: "পরিমাণ", t_rate: "দর", t_amt: "মোট টাকা", pay_type: "পেমেন্ট মোড", btn_save_bill: "বিল কনফার্ম ও সেভ করুন", recent_saved_bills: "সংরক্ষিত বিল সমূহ", t_cust: "ক্রেতা", t_items: "আইটেম সমূহ", t_action: "অ্যাকশন",
+                add_new_prod: "নতুন প্রোডাক্ট যোগ করুন", p_name_lbl: "প্রোডাক্টের নাম", p_sale_lbl: "বিক্রয় मूल्य (₹)", p_stock_lbl: "প্রারম্ভিক স্টক", p_unit_lbl: "ইউটি টাইপ", p_limit_lbl: "স্টক অ্যালার্ট限制", btn_save_prod: "প্রোডাক্ট সেভ করুন", prod_list: "স্টক তালিকা",
+                khata_entry: "খাতা লেজার এন্ট্রি", v_name: "ক্রেতা / বিক্রেতার নাম", trans_type: "লেনদেনের প্রকার", btn_save_khata: "এন্ট্রি সেভ করুন", pl_locked_title: "রিপোর্টটি লক করা আছে", pl_pin_msg: "মালেকের পিন কোড दिन", unlock: "রিপোর্ট আনলক করুন"
+            }
         };
 
-        // BAKI PURANE VARIABLES WAISE HI RAHENGE
-        let shopProfile = JSON.parse(localStorage.getItem('vp_shop_profile') || '{"name":"Rupali Store","phone":"+91 9999999999","address":"Main Bazaar, India"}');
-        let securityKeys = JSON.parse(localStorage.getItem('vp_security_keys') || '{"owner":"1234","manager":"5555"}');
-        let products = JSON.parse(localStorage.getItem('vp_products') || '[]');
-        let sales = JSON.parse(localStorage.getItem('vp_sales') || '[]');
-        let khata = JSON.parse(localStorage.getItem('vp_khata') || '[]');
-        let expenses = JSON.parse(localStorage.getItem('vp_expenses') || '[]');
-        let manualCosts = JSON.parse(localStorage.getItem('vp_manual_costs') || '[]'); 
+        let shopProfile = {name:"Rupali Store",phone:"+91 9999999999",address:"Main Bazaar, India"};
+        let securityKeys = {owner:"1234",manager:"5555"};
+        let products = [];
+        let sales = [];
+        let khata = [];
+        let expenses = [];
+        let manualCosts = [];
         let currentBillItems = [];
         let currentIndustry = 'grocery';
         let isSettingsUnlocked = false;
@@ -294,17 +871,83 @@
             taxi: { name: 'Taxi & Transport', sub: 'Safe & On-Time | Fleet Management', navStock: 'Vehicle / Routes' }
         };
 
-        function init() {
+        // ==========================================
+        // 💾 CAPACITOR SQLITE CORE FUNCTIONS
+        // ==========================================
+        async function initSQLiteDB() {
+            try {
+                db = await sqlite.createConnection("vyaparpro_db", false, "no-encryption", 1, false);
+                await db.open();
+
+                const query = `
+                    CREATE TABLE IF NOT EXISTS products (id INTEGER PRIMARY KEY, json_data TEXT);
+                    CREATE TABLE IF NOT EXISTS sales (id INTEGER PRIMARY KEY, json_data TEXT);
+                    CREATE TABLE IF NOT EXISTS khata (id INTEGER PRIMARY KEY, json_data TEXT);
+                    CREATE TABLE IF NOT EXISTS expenses (id INTEGER PRIMARY KEY, json_data TEXT);
+                    CREATE TABLE IF NOT EXISTS manual_costs (id INTEGER PRIMARY KEY, json_data TEXT);
+                    CREATE TABLE IF NOT EXISTS settings (id TEXT PRIMARY KEY, json_data TEXT);
+                `;
+                await db.execute(query);
+                console.log("✅ Capacitor SQLite Tables Ready!");
+                await loadAllAppConfig();
+            } catch (error) {
+                console.error("Capacitor SQLite Init Error: ", error);
+            }
+        }
+
+        async function loadTableData(tableName) {
+            try {
+                const res = await db.query(`SELECT json_data FROM ${tableName}`);
+                let results = [];
+                if (res.values && res.values.length > 0) {
+                    for (let row of res.values) {
+                        results.push(JSON.parse(row.json_data));
+                    }
+                }
+                return results;
+            } catch (error) { return []; }
+        }
+
+        async function saveToSQLite(tableName, dataObject) {
+            try {
+                const id = dataObject.id;
+                const jsonString = JSON.stringify(dataObject);
+                await db.run(`REPLACE INTO ${tableName} (id, json_data) VALUES (?, ?)`, [id, jsonString]);
+            } catch (error) { console.error(`Save Error:`, error); }
+        }
+
+        async function deleteFromSQLite(tableName, id) {
+            try { await db.run(`DELETE FROM ${tableName} WHERE id = ?`, [id]); } 
+            catch (error) { console.error(`Delete Error:`, error); }
+        }
+
+        async function loadAllAppConfig() {
+            products = await loadTableData('products');
+            sales = await loadTableData('sales');
+            // Continuation from loadAllAppConfig()
+            khata = await loadTableData('khata');
+            expenses = await loadTableData('expenses');
+            manualCosts = await loadTableData('manual_costs');
+            
+            // Load Settings if exist
+            const loadedSettings = await loadTableData('settings');
+            loadedSettings.forEach(s => {
+                if(s.id === 'shopProfile') shopProfile = s;
+                if(s.id === 'securityKeys') securityKeys = s;
+            });
+
             updateClock();
             setInterval(updateClock, 1000);
-            if(!localStorage.getItem('vp_bill_counter')) {
-                localStorage.setItem('vp_bill_counter', '1000');
-            }
+            
+            // Bill counter logic
+            if(!localStorage.getItem('vp_bill_counter')) localStorage.setItem('vp_bill_counter', '1000');
             generateBillNo();
+            
             renderAll();
+            
+            // Set Default Dates
             document.getElementById('e-date').valueAsDate = new Date();
             document.getElementById('pl-manual-cost-date').valueAsDate = new Date();
-            
             const firstDay = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
             document.getElementById('pl-start-date').valueAsDate = firstDay;
             document.getElementById('pl-end-date').valueAsDate = new Date();
@@ -314,16 +957,706 @@
             updateHeaderBrandingText();
         }
 
-        // ... AAPKE BAKI SAARE FUNCTIONS (renderAll, updateClock, switchTab, aadi) WAHIN RAHENGE ...
+        window.onload = () => {
+            initSQLiteDB();
+        };
 
         // ==========================================
-        // 3. MODIFIED: WINDOW ONLOAD 
+        // 📦 PRODUCT INVENTORY CRUD (SQLITE)
         // ==========================================
-        // Pehle seedha init() hota tha, ab hum pehle SQLite ko start karenge fir app ko.
-        window.onload = async function() {
-            await initSQLite();  // Step 1: Database Setup wait karo
-            init();              // Step 2: Apna UI aur App chalu karo
+        window.saveProduct = async function() {
+            const name = document.getElementById('p-name').value.trim();
+            const price = parseFloat(document.getElementById('p-price').value) || 0;
+            const cost = parseFloat(document.getElementById('p-cost').value) || 0; 
+            const stock = parseFloat(document.getElementById('p-stock').value) || 0;
+            const unit = document.getElementById('p-unit').value;
+            const limit = parseFloat(document.getElementById('p-limit').value) || 5;
+
+            if (!name || price <= 0) { showToast('❌ Fields validation failed!', 'red'); return; }
+
+            const newProduct = { id: Date.now(), name, price, cost, stock, unit, limit };
+            products.push(newProduct);
+            
+            await saveToSQLite('products', newProduct);
+
+            renderProductTable();
+            populateSellDropdown();
+            updateDashboard();
+
+            ['p-name','p-price','p-cost','p-stock','p-limit'].forEach(id => document.getElementById(id).value = '');
+            document.getElementById('p-cost').setAttribute('readonly', true);
+            document.getElementById('p-cost').style.background = 'var(--surface)';
+            showToast('✅ Saved Product: ' + name);
         };
+
+        window.deleteProduct = async function(id) {
+            const pin = prompt("🔐 Enter Owner PIN:");
+            if (pin !== securityKeys.owner) return;
+            products = products.filter(p => p.id !== id);
+            await deleteFromSQLite('products', id);
+            renderProductTable(); populateSellDropdown();
+        };
+        
+        window.saveEditedCost = async function() {
+            const id = parseInt(document.getElementById('edit-prod-id').value);
+            const price = parseFloat(document.getElementById('edit-prod-price').value) || 0;
+            const cost = parseFloat(document.getElementById('edit-prod-cost').value) || 0;
+            if(price <= 0) return;
+            
+            const prodIndex = products.findIndex(p => p.id === id);
+            if(prodIndex > -1) {
+                products[prodIndex].price = price;
+                products[prodIndex].cost = cost;
+                await saveToSQLite('products', products[prodIndex]);
+            }
+            closeCostModal(); renderAll();
+            showToast("✏️ Product Prices Updated!");
+        };
+
+        // ==========================================
+        // 🧾 BILLING CRUD (SQLITE)
+        // ==========================================
+        window.saveBill = async function() {
+            if (!currentBillItems.length) return;
+            const custName = document.getElementById('cust-name').value.trim() || 'Walk-in Customer';
+            let custPhone = document.getElementById('cust-phone').value.trim();
+            if(custPhone === "+91") custPhone = ""; 
+            const billNo = document.getElementById('cust-billno').value;
+            const payment = document.getElementById('payment-type').value;
+            const totals = calculateBillTotals();
+            const now = new Date();
+            const formattedIsoString = now.toISOString().split('T')[0];
+
+            const bill = {
+                id: Date.now(), billNo, custName, custPhone, items: [...currentBillItems], 
+                subtotal: totals.subtotal, discount: totals.discount, total: totals.grandTotal, payment,
+                isoDate: formattedIsoString,
+                date: now.toLocaleDateString('en-GB'), time: now.toLocaleTimeString('en-GB', {hour:'2-digit', minute:'2-digit'})
+            };
+
+            sales.push(bill);
+            await saveToSQLite('sales', bill);
+
+            // Stock update in DB
+            for (let bi of currentBillItems) {
+                const p = products.find(p => p.id === bi.prodId); 
+                if (p) {
+                    p.stock -= bi.qty;
+                    await saveToSQLite('products', p);
+                }
+            }
+
+            if (payment === 'udhar') {
+                const khataEntry = { id: Date.now() + 1, name: custName, phone: custPhone, type: 'lena', amount: totals.grandTotal, note: 'Bill #' + billNo, isoDate: formattedIsoString, date: now.toLocaleDateString('en-GB', {day:'2-digit', month:'short'}) };
+                khata.push(khataEntry);
+                await saveToSQLite('khata', khataEntry);
+            }
+
+            clearBill(); renderAll(); openBillModal(bill);
+        };
+
+        window.deleteBill = async function(id) {
+            if (prompt("🔑 Manager Password:") !== securityKeys.manager) return;
+            sales = sales.filter(b => b.id !== id); 
+            await deleteFromSQLite('sales', id);
+            renderAll();
+        };
+
+        window.saveEditedBill = async function() {
+            const id = parseInt(document.getElementById('edit-bill-id').value);
+            const updatedName = document.getElementById('edit-bill-name').value;
+            const updatedTotal = parseFloat(document.getElementById('edit-bill-total').value);
+            const updatedPayment = document.getElementById('edit-bill-payment').value;
+            
+            const billIndex = sales.findIndex(b => b.id === id);
+            if(billIndex > -1) {
+                sales[billIndex].custName = updatedName;
+                sales[billIndex].total = updatedTotal;
+                sales[billIndex].payment = updatedPayment;
+                await saveToSQLite('sales', sales[billIndex]);
+            }
+            closeEditModal(); renderAll();
+        };
+
+        // ==========================================
+        // 📑 UDHAR KHATA CRUD (SQLITE)
+        // ==========================================
+        window.saveKhata = async function() {
+            const isExisting = document.getElementById('profile-existing').checked;
+            let name = isExisting ? document.getElementById('k-name-dropdown').value : document.getElementById('k-name').value.trim();
+            let phone = document.getElementById('k-phone').value.trim();
+            if(phone === "+91") phone = "";
+            const type = document.getElementById('k-type').value;
+            const amount = parseFloat(document.getElementById('k-amount').value) || 0;
+            const note = document.getElementById('k-note').value.trim();
+            const isoStringDate = new Date().toISOString().split('T')[0];
+
+            if (!name || amount <= 0) return;
+            
+            const khataEntry = { id: Date.now(), name, phone, type, amount, note, isoDate: isoStringDate, date: new Date().toLocaleDateString('en-GB', {day:'2-digit', month:'short'}) };
+            khata.push(khataEntry);
+            
+            await saveToSQLite('khata', khataEntry);
+            
+            renderKhataTable(); populateKhataDropdown(); populateBillCustomerDropdown(); updateDashboard();
+            ['k-name','k-phone','k-amount','k-note'].forEach(id => { if(document.getElementById(id)) document.getElementById(id).value = ''; });
+            if(document.getElementById('k-phone')) document.getElementById('k-phone').value = '+91';
+            showToast('✅ Khata Entry Saved!');
+        };
+
+        window.deleteKhata = async function(id) { 
+            khata = khata.filter(k => k.id !== id); 
+            await deleteFromSQLite('khata', id);
+            renderKhataTable(); populateKhataDropdown(); populateBillCustomerDropdown(); updateDashboard(); 
+        };
+
+        // ==========================================
+        // 💸 EXPENSES CRUD (SQLITE)
+        // ==========================================
+        window.saveExpense = async function() {
+            const category = document.getElementById('e-category').value;
+            const amount = parseFloat(document.getElementById('e-amount').value) || 0;
+            const note = document.getElementById('e-note').value.trim();
+            const date = document.getElementById('e-date').value;
+            
+            if (amount <= 0 || !date) return;
+            
+            const newExp = { id: Date.now(), category, amount, note, date };
+            expenses.push(newExp);
+            
+            await saveToSQLite('expenses', newExp);
+            
+            renderExpenseTable();
+            document.getElementById('e-amount').value = ''; document.getElementById('e-note').value = '';
+        };
+
+        window.deleteExpense = async function(id) { 
+            expenses = expenses.filter(e => e.id !== id); 
+            await deleteFromSQLite('expenses', id);
+            renderExpenseTable(); 
+        };
+
+        // ==========================================
+        // ⚙️ SYSTEM SETTINGS & MANUAL COSTS (SQLITE)
+        // ==========================================
+        window.saveShopProfile = async function() {
+            const name = document.getElementById('cfg-shop-name').value.trim();
+            const phone = document.getElementById('cfg-shop-phone').value.trim();
+            const address = document.getElementById('cfg-shop-address').value.trim();
+            if(!name) { alert("Shop name cannot be blank!"); return; }
+            
+            shopProfile = { id: 'shopProfile', name, phone, address };
+            await saveToSQLite('settings', shopProfile);
+            
+            updateHeaderBrandingText();
+            showToast("🏪 Shop Identity Profile Saved!");
+        };
+
+        window.saveSecurityKeys = async function() {
+            const owner = document.getElementById('cfg-owner-pin').value.trim();
+            const manager = document.getElementById('cfg-manager-pin').value.trim();
+            if(!owner || !manager) { alert("Passwords cannot be empty!"); return; }
+            
+            securityKeys = { id: 'securityKeys', owner, manager };
+            await saveToSQLite('settings', securityKeys);
+            
+            showToast("🔒 Security Passwords Updated!");
+            lockSettingsPage();
+            document.getElementById('pl-content').style.display = 'none';
+            document.getElementById('pl-locked').style.display = 'block';
+            document.getElementById('pl-pin').value = '';
+        };
+
+        window.injectManualCost = async function() {
+            const amt = parseFloat(document.getElementById('pl-manual-cost-input').value) || 0;
+            const mDate = document.getElementById('pl-manual-cost-date').value;
+            if(amt <= 0 || !mDate) return;
+            
+            const mCost = { id: Date.now(), amount: amt, note: document.getElementById('pl-manual-cost-note').value.trim(), date: mDate };
+            manualCosts.push(mCost);
+            
+            await saveToSQLite('manual_costs', mCost);
+            
+            document.getElementById('pl-manual-cost-input').value = ''; document.getElementById('pl-manual-cost-note').value = '';
+            calculateAndDisplayPL();
+        };
+
+        // ==========================================
+        // 🔄 NORMAL UI / RENDER FUNCTIONS (Exposed globally)
+        // ==========================================
+        window.renderAll = function() {
+            populateSellDropdown();
+            renderProductTable();
+            renderSalesTable();
+            renderKhataTable();
+            renderExpenseTable();
+            populateKhataDropdown(); 
+            populateBillCustomerDropdown();
+            updateDashboard();
+        };
+
+        window.updateClock = function() {
+            const now = new Date();
+            document.getElementById('live-time').textContent = '⏱️ ' + now.toLocaleTimeString('en-US', {hour:'2-digit', minute:'2-digit'}) + ' | ' + now.toLocaleDateString('en-US', {day:'2-digit', month:'short'});
+        };
+
+        window.switchTab = function(tab) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.nav-btn, .mobile-nav-btn').forEach(el => el.classList.remove('active'));
+            
+            const targetedTabArea = document.getElementById('tab-' + tab);
+            if(targetedTabArea) targetedTabArea.classList.add('active');
+            
+            const deskBtn = document.getElementById('btn-' + tab);
+            if(deskBtn) deskBtn.classList.add('active');
+            
+            const mobBtn = document.getElementById('m-btn-' + tab);
+            if(mobBtn) mobBtn.classList.add('active');
+
+            if (tab === 'sell') { populateSellDropdown(); populateBillCustomerDropdown(); updateBillGrandTotalDisplay(); }
+            if (tab === 'inventory') renderProductTable();
+            if (tab === 'udhar') { renderKhataTable(); populateKhataDropdown(); }
+            if (tab === 'expenses') renderExpenseTable();
+            if (tab === 'dashboard') updateDashboard();
+            if (tab === 'pl') { calculateAndDisplayPL(); }
+            if (tab === 'settings') {
+                if(isSettingsUnlocked) {
+                    document.getElementById('settings-locked').style.display = 'none';
+                    document.getElementById('settings-content').style.display = 'block';
+                    loadSettingsFormValues();
+                } else {
+                    document.getElementById('settings-locked').style.display = 'block';
+                    document.getElementById('settings-content').style.display = 'none';
+                    document.getElementById('settings-gate-pin').value = '';
+                }
+            }
+        };
+
+        window.generateBillNo = function() {
+            let currentCounter = parseInt(localStorage.getItem('vp_bill_counter') || '1000');
+            currentCounter++;
+            localStorage.setItem('vp_bill_counter', currentCounter.toString());
+            document.getElementById('cust-billno').value = 'INV-' + currentCounter;
+        };
+
+        window.changeLanguage = function() {
+            const currentLang = document.getElementById('lang-selector').value;
+            const dict = langData[currentLang];
+            document.querySelectorAll('[data-key]').forEach(el => {
+                const key = el.getAttribute('data-key');
+                if(dict[key]) { el.textContent = dict[key]; }
+            });
+        };
+
+        window.unlockSettingsPage = function() {
+            const pinEntered = document.getElementById('settings-gate-pin').value;
+            if(pinEntered === securityKeys.owner) {
+                isSettingsUnlocked = true;
+                document.getElementById('settings-locked').style.display = 'none';
+                document.getElementById('settings-content').style.display = 'block';
+                loadSettingsFormValues();
+                renderProductTable(); 
+                showToast("🔓 Setup Controls Unlocked!");
+            } else {
+                alert("❌ Unauthorized Access Code!");
+                document.getElementById('settings-gate-pin').value = '';
+            }
+        };
+
+        window.lockSettingsPage = function() {
+            isSettingsUnlocked = false;
+            document.getElementById('settings-content').style.display = 'none';
+            document.getElementById('settings-locked').style.display = 'block';
+            document.getElementById('settings-gate-pin').value = '';
+            renderProductTable(); 
+            showToast("🔒 Setup Terminals Locked!");
+        };
+
+        window.changeIndustry = function() {
+            currentIndustry = document.getElementById('industry-selector').value;
+            updateHeaderBrandingText();
+            const cfg = industryConfig[currentIndustry];
+            document.getElementById('nav-stock-label').textContent = cfg.navStock;
+            showToast('✅ Industry Switch: ' + cfg.name);
+        };
+
+        window.updateHeaderBrandingText = function() {
+            const cfg = industryConfig[currentIndustry];
+            document.getElementById('dash-industry-sub').textContent = shopProfile.name + " | " + cfg.sub + " | FY 2026-2027";
+        };
+
+        window.loadSettingsFormValues = function() {
+            document.getElementById('cfg-shop-name').value = shopProfile.name;
+            document.getElementById('cfg-shop-phone').value = shopProfile.phone;
+            document.getElementById('cfg-shop-address').value = shopProfile.address;
+            document.getElementById('cfg-owner-pin').value = securityKeys.owner;
+            document.getElementById('cfg-manager-pin').value = securityKeys.manager;
+        };
+
+        window.unlockCostField = function() {
+            const pin = prompt("🔐 Enter Owner Password:");
+            if (pin === securityKeys.owner) {
+                document.getElementById('p-cost').removeAttribute('readonly');
+                document.getElementById('p-cost').style.background = '#FFFFFF';
+                showToast("🔓 Cost Price Unlocked!");
+            } else { alert("❌ Unauthorized Access Code!"); }
+        };
+
+        window.renderProductTable = function() {
+            const tbody = document.getElementById('product-table-body');
+            if (!products.length) {
+                tbody.innerHTML = '<tr><td colspan="7"><div class="empty-state">📦 Product List is Empty</div></td></tr>';
+                return;
+            }
+            tbody.innerHTML = products.map(p => {
+                const low = p.stock <= p.limit;
+                const badge = low ? '<span class="badge badge-red">⚠️ Low</span>' : '<span class="badge badge-green">✅ OK</span>';
+                let costDisplay = isSettingsUnlocked ? `₹${p.cost.toFixed(2)}` : `🔒 Hidden`;
+                
+                return `<tr>
+                    <td><strong>${p.name}</strong></td>
+                    <td>₹${p.price.toFixed(2)}</td>
+                    <td style="font-weight:bold;">${costDisplay}</td>
+                    <td><strong style="color:${low?'var(--red)':'var(--green)'}">${p.stock}</strong></td>
+                    <td>${p.unit}</td>
+                    <td>${badge}</td>
+                    <td>
+                        <button class="btn btn-blue btn-sm" onclick="editProductCostPrompt(${p.id})">✏️</button>
+                        <button class="btn btn-red btn-sm" onclick="deleteProduct(${p.id})">🗑️</button>
+                    </td>
+                </tr>`;
+            }).join('');
+        };
+
+        window.editProductCostPrompt = function(id) {
+            const pin = prompt("🔐 Enter Owner PIN:");
+            if (pin !== securityKeys.owner) { alert("❌ Unauthorized Access!"); return; }
+            const p = products.find(prod => prod.id === id);
+            if(!p) return;
+            document.getElementById('edit-prod-id').value = p.id;
+            document.getElementById('edit-prod-name').value = p.name;
+            document.getElementById('edit-prod-price').value = p.price;
+            document.getElementById('edit-prod-cost').value = p.cost;
+            document.getElementById('edit-cost-modal').classList.add('open');
+        };
+
+        window.closeCostModal = function() { document.getElementById('edit-cost-modal').classList.remove('open'); };
+
+        window.populateSellDropdown = function() {
+            const sel = document.getElementById('s-id');
+            if(sel) sel.innerHTML = '<option value="">-- Chunein / Select --</option>' + products.map(p => `<option value="${p.id}" data-price="${p.price}" data-stock="${p.stock}" data-unit="${p.unit}">${p.name} (Stock: ${p.stock})</option>`).join('');
+        };
+
+        window.updateSellItem = function() {
+            const sel = document.getElementById('s-id');
+            const opt = sel.options[sel.selectedIndex];
+            document.getElementById('s-price').value = opt.dataset.price || '';
+            document.getElementById('s-avail').value = opt.dataset.stock ? opt.dataset.stock + ' ' + (opt.dataset.unit || '') : '';
+        };
+
+        window.populateBillCustomerDropdown = function() {
+            const dropdown = document.getElementById('bill-cust-dropdown');
+            if(!dropdown) return;
+            const balances = calculateLedgerBalances();
+            let keys = Object.keys(balances);
+            if(!keys.length) { 
+                dropdown.innerHTML = '<option value="">-- No Saved Contacts Yet --</option>'; 
+                return; 
+            }
+            dropdown.innerHTML = '<option value="">-- Select Existing Phonebook --</option>' + 
+                keys.map(n => `<option value="${n}" data-phone="${balances[n].phone}">${n} (${balances[n].phone || 'No Phone'})</option>`).join('');
+        };
+
+        window.fillCustomerFromDropdown = function() {
+            const dropdown = document.getElementById('bill-cust-dropdown');
+            const selectedOpt = dropdown.options[dropdown.selectedIndex];
+            if(!selectedOpt || dropdown.value === "") return;
+            
+            document.getElementById('cust-name').value = selectedOpt.value;
+            let rawPhone = selectedOpt.dataset.phone || '';
+            document.getElementById('cust-phone').value = rawPhone ? rawPhone : "+91";
+        };
+
+        window.generateWhatsAppLink = function(phone, billNo, totalAmount) {
+            let cleanPhone = phone.replace(/\D/g, ''); 
+            if(cleanPhone.length === 10) { cleanPhone = "91" + cleanPhone; }
+            if(!cleanPhone) return "#";
+            let messageText = `Hello, Thank you for shopping with us! Your Bill No: ${billNo} for Amount: ₹${totalAmount} has been generated successfully. Click here to view details.`;
+            return `https://api.whatsapp.com/send?phone=${cleanPhone}&text=${encodeURIComponent(messageText)}`;
+        };
+
+        window.addItemToBill = function() {
+            const sel = document.getElementById('s-id');
+            const prodId = parseInt(sel.value);
+            const qty = parseFloat(document.getElementById('s-qty').value) || 0;
+            if (!prodId || qty <= 0) return;
+            const prod = products.find(p => p.id === prodId);
+            if (qty > prod.stock) { showToast('❌ Insufficient stock!', 'red'); return; }
+
+            const existing = currentBillItems.find(i => i.prodId === prodId);
+            if (existing) {
+                existing.qty += qty; existing.total = existing.qty * existing.price;
+            } else {
+                currentBillItems.push({ prodId, name: prod.name, qty, price: prod.price, total: qty * prod.price, unit: prod.unit });
+            }
+            renderBillPreview(); updateBillGrandTotalDisplay();
+            document.getElementById('s-qty').value = '';
+        };
+
+        window.renderBillPreview = function() {
+            const tbody = document.getElementById('bill-items-body');
+            if (!currentBillItems.length) {
+                tbody.innerHTML = '<tr><td colspan="6"><div class="empty-state">No items added</div></td></tr>'; return;
+            }
+            tbody.innerHTML = currentBillItems.map((item, i) => `<tr>
+                <td>${i+1}</td><td><strong>${item.name}</strong></td><td>${item.qty} ${item.unit}</td><td>₹${item.price}</td><td><strong>₹${item.total}</strong></td>
+                <td><button onclick="removeFromBill(${i})" style="background:none;border:none;color:var(--red);">✕</button></td>
+            </tr>`).join('');
+        };
+
+        window.removeFromBill = function(idx) { currentBillItems.splice(idx, 1); renderBillPreview(); updateBillGrandTotalDisplay(); };
+        
+        window.calculateBillTotals = function() {
+            const subtotal = currentBillItems.reduce((s, i) => s + i.total, 0);
+            const discount = parseFloat(document.getElementById('bill-discount').value) || 0;
+            return { subtotal, discount, grandTotal: Math.max(0, subtotal - discount) };
+        };
+        
+        window.updateBillGrandTotalDisplay = function() {
+            document.getElementById('bill-grand-total-display').textContent = '₹' + calculateBillTotals().grandTotal.toFixed(2);
+        };
+
+        window.clearBill = function() {
+            currentBillItems = []; renderBillPreview();
+            document.getElementById('cust-name').value = ''; document.getElementById('cust-phone').value = '+91';
+            document.getElementById('bill-discount').value = '0'; 
+            document.getElementById('bill-cust-dropdown').value = '';
+            updateBillGrandTotalDisplay(); generateBillNo();
+        };
+
+        window.openBillModal = function(b) {
+            const rows = b.items.map((it, i) => `<tr><td>${i+1}</td><td>${it.name}</td><td>${it.qty}</td><td>₹${it.price}</td><td>₹${it.total}</td></tr>`).join('');
+            document.getElementById('print-invoice-area').innerHTML = `
+                <div class="print-bill" style="padding:15px;">
+                    <div class="bill-header"><h2>${shopProfile.name}</h2><p>${shopProfile.address}</p></div>
+                    <div style="margin:10px 0; font-size:12px;"><b>Bill:</b> ${b.billNo} | <b>Cust:</b> ${b.custName} | <b>Phone:</b> ${b.custPhone || 'N/A'}</div>
+                    <table style="width:100%; font-size:12px;">${rows}</table>
+                    <div class="bill-total"><div class="bill-total-row grand"><span>TOTAL:</span> <span>₹${b.total}</span></div></div>
+                </div>`;
+            
+            const whatsappBtn = document.getElementById('modal-whatsapp-btn');
+            if(b.custPhone) {
+                whatsappBtn.style.display = "inline-flex";
+                whatsappBtn.onclick = function() {
+                    window.open(generateWhatsAppLink(b.custPhone, b.billNo, b.total), '_blank');
+                };
+            } else {
+                whatsappBtn.style.display = "none";
+            }
+            
+            document.getElementById('print-modal').classList.add('open');
+        };
+
+        window.closePrintModal = function() { document.getElementById('print-modal').classList.remove('open'); };
+
+        window.renderSalesTable = function() {
+            const tbody = document.getElementById('sales-table-body');
+            if (!sales.length) {
+                tbody.innerHTML = '<tr><td colspan="6"><div class="empty-state">No bills found</div></td></tr>'; return;
+            }
+            tbody.innerHTML = [...sales].reverse().map(b => {
+                let waButton = b.custPhone ? `<a href="${generateWhatsAppLink(b.custPhone, b.billNo, b.total)}" target="_blank" class="btn btn-whatsapp btn-sm" style="padding: 6px 8px;">💬</a>` : '';
+                return `<tr>
+                    <td><strong>${b.billNo}</strong></td><td>${b.custName}</td><td>${b.items.length}</td><td>₹${b.total}</td>
+                    <td><span class="badge ${b.payment==='udhar'?'badge-amber':'badge-green'}">${b.payment}</span></td>
+                    <td>
+                        <button class="btn btn-print btn-sm" onclick='showSavedBillInvoice(${b.id})'>🖨️</button>
+                        ${waButton}
+                        <button class="btn btn-blue btn-sm" onclick="editBillModalPrompt(${b.id})">✏️</button>
+                        <button class="btn btn-red btn-sm" onclick="deleteBill(${b.id})">🗑️</button>
+                    </td>
+                </tr>`;
+            }).join('');
+        };
+
+        window.showSavedBillInvoice = function(id) { const m = sales.find(s => s.id === id); if(m) openBillModal(m); };
+        
+        window.editBillModalPrompt = function(id) {
+            const pin = prompt("🔑 Manager Password:"); if (pin !== securityKeys.manager) return;
+            const b = sales.find(x => x.id === id); if(!b) return;
+            document.getElementById('edit-bill-id').value = b.id;
+            document.getElementById('edit-bill-name').value = b.custName;
+            document.getElementById('edit-bill-total').value = b.total;
+            document.getElementById('edit-bill-payment').value = b.payment;
+            document.getElementById('edit-bill-modal').classList.add('open');
+        };
+
+        window.closeEditModal = function() { document.getElementById('edit-bill-modal').classList.remove('open'); };
+
+        window.toggleKhataProfileMode = function() {
+            const isExisting = document.getElementById('profile-existing').checked;
+            document.getElementById('khata-name-input-wrap').style.display = isExisting ? 'none' : 'block';
+            document.getElementById('khata-name-select-wrap').style.display = isExisting ? 'block' : 'none';
+            if(isExisting) populateKhataDropdown();
+        };
+
+        window.calculateLedgerBalances = function() {
+            let mapping = {};
+            khata.forEach(k => {
+                if(!mapping[k.name]) mapping[k.name] = { balance: 0, phone: k.phone || '' };
+                if(k.type === 'lena') mapping[k.name].balance += k.amount;
+                else if(k.type === 'dena') mapping[k.name].balance -= k.amount; 
+                else if(k.type === 'received') mapping[k.name].balance -= k.amount;
+                else if(k.type === 'paid') mapping[k.name].balance += k.amount;
+            });
+            return mapping;
+        };
+
+        window.populateKhataDropdown = function() {
+            const dropdown = document.getElementById('k-name-dropdown');
+            if(!dropdown) return;
+            const balances = calculateLedgerBalances();
+            let keys = Object.keys(balances);
+            if(!keys.length) { dropdown.innerHTML = '<option value="">-- No Accounts --</option>'; return; }
+            dropdown.innerHTML = '<option value="">-- Choose Account --</option>' + keys.map(n => `<option value="${n}" data-phone="${balances[n].phone}" data-bal="${balances[n].balance}">${n} (Bal: ₹${balances[n].balance})</option>`).join('');
+        };
+
+        window.handleKhataDropdownChange = function() {
+            const d = document.getElementById('k-name-dropdown');
+            const o = d.options[d.selectedIndex]; if(!o || d.value === "") return;
+            document.getElementById('k-phone').value = o.dataset.phone || '+91';
+            let b = parseFloat(o.dataset.bal) || 0;
+            document.getElementById('k-type').value = b > 0 ? "received" : "paid";
+            document.getElementById('k-amount').value = Math.abs(b);
+        };
+
+        window.renderKhataTable = function() {
+            const tbody = document.getElementById('khata-table-body');
+            if (!khata.length) {
+                tbody.innerHTML = '<tr><td colspan="6"><div class="empty-state">No entries</div></td></tr>'; return;
+            }
+            let balances = calculateLedgerBalances(), totalLena = 0, totalDena = 0;
+            Object.keys(balances).forEach(n => {
+                if(balances[n].balance > 0) totalLena += balances[n].balance; else totalDena += Math.abs(balances[n].balance);
+            });
+            tbody.innerHTML = [...khata].reverse().map(k => `<tr>
+                <td><strong>${k.name}</strong><br><small>${k.date}</small></td><td>${k.phone||'—'}</td>
+                <td><span class="badge">${k.type.toUpperCase()}</span></td><td><strong>₹${k.amount}</strong></td><td>${k.note||'—'}</td>
+                <td><button class="btn btn-red btn-sm" onclick="deleteKhata(${k.id})">🗑️</button></td>
+            </tr>`).join('');
+            document.getElementById('ledger-summary').textContent = `Lena: ₹${totalLena} | Dena: ₹${totalDena}`;
+        };
+
+        window.renderExpenseTable = function() {
+            const tbody = document.getElementById('expense-table-body');
+            const total = expenses.reduce((s, e) => s + e.amount, 0);
+            document.getElementById('expense-total').textContent = 'Total: ₹' + total;
+            if (!expenses.length) { tbody.innerHTML = '<tr><td colspan="5"><div class="empty-state">No expenses</div></td></tr>'; return; }
+            tbody.innerHTML = [...expenses].reverse().map(e => `<tr>
+                <td><strong>${e.category}</strong></td><td>₹${e.amount}</td><td>${e.note||'—'}</td><td>${e.date}</td>
+                <td><button class="btn btn-red btn-sm" onclick="deleteExpense(${e.id})">🗑️</button></td>
+            </tr>`).join('');
+        };
+
+        window.updateDashboard = function() {
+            const paidSales = sales.reduce((s, b) => s + b.total, 0);
+            document.getElementById('dash-sales').textContent = '₹' + paidSales;
+            let balances = calculateLedgerBalances(), totalLena = 0;
+            Object.keys(balances).forEach(n => { if(balances[n].balance > 0) totalLena += balances[n].balance; });
+            document.getElementById('dash-lena').textContent = '₹' + totalLena;
+
+            const low = products.filter(p => p.stock <= p.limit);
+            document.getElementById('dash-low-list').innerHTML = low.length === 0 ? '<li>✅ Stock OK</li>' : low.map(p => `<li>${p.name} (${p.stock} left)</li>`).join('');
+            document.getElementById('dash-sales-list').innerHTML = sales.slice(-3).map(b => `<div>${b.billNo}: ₹${b.total}</div>`).join('');
+        };
+
+        window.unlockPL = function() {
+            if (document.getElementById('pl-pin').value !== securityKeys.owner) return;
+            document.getElementById('pl-locked').style.display = 'none'; document.getElementById('pl-content').style.display = 'block';
+            calculateAndDisplayPL();
+        };
+
+        window.togglePLDateMode = function() {
+            const customModeChecked = document.getElementById('pl-range-custom').checked;
+            document.getElementById('pl-date-pickers-row').style.display = customModeChecked ? 'grid' : 'none';
+            calculateAndDisplayPL();
+        };
+
+        window.calculateAndDisplayPL = function() {
+            const isCustomRange = document.getElementById('pl-range-custom').checked;
+            let startRangeStr = document.getElementById('pl-start-date').value;
+            let endRangeStr = document.getElementById('pl-end-date').value;
+
+            let localizedSales = [...sales];
+            let localizedExpenses = [...expenses];
+            let localizedManualCosts = [...manualCosts];
+
+            if (isCustomRange && startRangeStr && endRangeStr) {
+                localizedSales = sales.filter(s => s.isoDate >= startRangeStr && s.isoDate <= endRangeStr);
+                localizedExpenses = expenses.filter(e => e.date >= startRangeStr && e.date <= endRangeStr);
+                localizedManualCosts = manualCosts.filter(m => m.date >= startRangeStr && m.date <= endRangeStr);
+            }
+
+            const grossRevenue = localizedSales.reduce((sum, bill) => sum + bill.total, 0);
+            const standardExpensesTotal = localizedExpenses.reduce((sum, exp) => sum + exp.amount, 0);
+            const rawProcurementCostsTotal = localizedManualCosts.reduce((sum, cost) => sum + cost.amount, 0);
+            
+            let internalProductCogsTotal = 0;
+            localizedSales.forEach(bill => {
+                bill.items.forEach(item => {
+                    const matchedProd = products.find(p => p.id === item.prodId);
+                    if (matchedProd) {
+                        internalProductCogsTotal += (matchedProd.cost * item.qty);
+                    }
+                });
+            });
+
+            const totalDeductions = standardExpensesTotal + rawProcurementCostsTotal + internalProductCogsTotal;
+            const computedNetProfit = grossRevenue - totalDeductions;
+
+            document.getElementById('pl-revenue').textContent = '₹' + grossRevenue.toFixed(2);
+            document.getElementById('pl-expenses').textContent = '₹' + totalDeductions.toFixed(2);
+            document.getElementById('pl-net').textContent = '₹' + computedNetProfit.toFixed(2);
+
+            const cardEl = document.getElementById('pl-net-card');
+            if (computedNetProfit >= 0) {
+                cardEl.className = "stat-card stat-green";
+            } else {
+                cardEl.className = "stat-card stat-red";
+            }
+
+            let subCategorySumMapping = { "Staff Salary": 0, "Electricity Bill": 0, "Transportation": 0, "Rent": 0, "Others": 0 };
+            localizedExpenses.forEach(exp => {
+                if (subCategorySumMapping[exp.category] !== undefined) {
+                    subCategorySumMapping[exp.category] += exp.amount;
+                } else {
+                    subCategorySumMapping["Others"] += exp.amount;
+                }
+            });
+
+            document.getElementById('pl-table').innerHTML = `
+                <tr><td><b>(+) Total Gross Sales Revenue Invoice Income</b></td><td style="color:var(--green); font-weight:bold;">+₹${grossRevenue.toFixed(2)}</td></tr>
+                <tr><td><b>(-) Inventory COGS Cost Price</b> (Sold Items Base Cost)</td><td style="color:var(--red); font-weight:bold;">-₹${internalProductCogsTotal.toFixed(2)}</td></tr>
+                <tr><td><b>(-) External Setup / Bulk Procurement Charges</b></td><td style="color:var(--red); font-weight:bold;">-₹${rawProcurementCostsTotal.toFixed(2)}</td></tr>
+                <tr style="background:var(--surface); font-weight:700;"><td colspan="2">🏢 Segmented Logged Expenses Breakdown</td></tr>
+                <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;• Staff Salary Payouts</td><td>-₹${subCategorySumMapping["Staff Salary"].toFixed(2)}</td></tr>
+                <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;• Electricity Power Utilities</td><td>-₹${subCategorySumMapping["Electricity Bill"].toFixed(2)}</td></tr>
+                <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;• Fleet Transport & Freight Delivery Charges</td><td>-₹${subCategorySumMapping["Transportation"].toFixed(2)}</td></tr>
+                <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;• Base Workspace Rent Property Bills</td><td>-₹${subCategorySumMapping["Rent"].toFixed(2)}</td></tr>
+                <tr><td>&nbsp;&nbsp;&nbsp;&nbsp;• Miscellaneous Operational Expenses (Others)</td><td>-₹${subCategorySumMapping["Others"].toFixed(2)}</td></tr>
+                <tr style="border-top:2px solid var(--ink); font-size:16px; font-weight:800; background:var(--blue-light);">
+                    <td>FINAL VALUE SUMMARY NET MARGIN</td>
+                    <td style="color:${computedNetProfit >= 0 ? 'var(--green)' : 'var(--red)'}">₹${computedNetProfit.toFixed(2)}</td>
+                </tr>
+            `;
+        };
+
+        window.showToast = function(msg, color = 'green') {
+            const el = document.getElementById('toast'); el.textContent = msg;
+            el.style.background = color === 'red' ? 'var(--red)' : 'var(--ink)';
+            el.style.display = 'flex'; setTimeout(() => { el.style.display = 'none'; }, 2000);
+        };
+
     </script>
 </body>
 </html>
