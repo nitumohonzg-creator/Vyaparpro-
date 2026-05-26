@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vyapar PRO SMART</title>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&family=Mukta:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* AAPKA PURANA CSS SAME TO SAME YAHAN HAI */
+        :root { 
+            --saffron: #FF6B00; --saffron-light: #FFF3E8; --saffron-dark: #CC5200; 
+            --green: #00875A; --green-light: #E3F5EE; --blue: #1A56DB; --blue-light: #EBF0FF; 
+            --red: #E02020; --red-light: #FDEAEA; --amber: #D97706; --amber-light: #FFFBEB; 
+            --ink: #1A1A2E; --ink-soft: #444466; --ink-muted: #888; --surface: #F7F8FC; 
+            --card: #FFFFFF; --border: #E2E5F0; --border-soft: #F0F2FA; 
+            --shadow: 0 2px 12px rgba(26,22,64,0.08); --shadow-lg: 0 8px 32px rgba(26,22,64,0.13); 
+            --radius: 14px; --radius-sm: 8px; 
+            --whatsapp: #25D366;
+        } 
+        * { margin: 0; padding: 0; box-sizing: border-box; } 
+        html { scroll-behavior: smooth; } 
+        body { font-family: 'Mukta', sans-serif; background: var(--surface); color: var(--ink); min-height: 100vh; display: flex; flex-direction: column; overflow-x: hidden; } 
+        ::-webkit-scrollbar { width: 6px; height: 6px; } 
+        ::-webkit-scrollbar-track { background: var(--border-soft); } 
+        ::-webkit-scrollbar-thumb { background: #C0C8E0; border-radius: 10px; } 
+        
+        .topbar { background: var(--ink); color: white; display: flex; align-items: center; justify-content: space-between; padding: 0 24px; height: 64px; position: sticky; top: 0; z-index: 100; gap: 12px; } 
+        .brand { font-family: 'Baloo 2', cursive; font-size: 22px; font-weight: 800; color: white; display: flex; align-items: center; gap: 8px; } 
+        .brand-badge { font-size: 10px; font-weight: 700; background: var(--saffron); color: white; padding: 2px 7px; border-radius: 20px; letter-spacing: 0.5px; } 
+        .topbar-right { display: flex; align-items: center; gap: 12px; flex-shrink: 0; } 
+        #live-time { font-size: 12px; color: #AAB; font-weight: 600; display: flex; align-items: center; gap: 6px; } 
+        .topbar-select { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); color: white; font-family: 'Mukta', sans-serif; font-size: 12px; font-weight: 600; padding: 6px 10px; border-radius: var(--radius-sm); cursor: pointer; outline: none; } 
+        .topbar-select option { background: #222; } 
+        
+        .layout { display: flex; flex: 1; min-height: calc(100vh - 64px); position: relative; } 
+        .sidebar { width: 240px; flex-shrink: 0; background: var(--card); border-right: 1px solid var(--border); display: flex; flex-direction: column; padding-bottom: 20px; } 
+        .sidebar-section { padding: 14px 18px 4px; font-size: 11px; font-weight: 700; color: var(--ink-muted); text-transform: uppercase; letter-spacing: 0.8px; } 
+        .nav-btn { display: flex; align-items: center; gap: 12px; width: 100%; padding: 12px 18px; font-family: 'Mukta', sans-serif; font-size: 14px; font-weight: 600; color: var(--ink-soft); background: none; border: none; cursor: pointer; text-align: left; transition: all 0.15s; border-left: 4px solid transparent; } 
+        .nav-btn:hover { background: var(--surface); color: var(--blue); } 
+        .nav-btn.active { background: var(--blue-light); color: var(--blue); border-left-color: var(--blue); font-weight: 700; } 
+        .nav-btn .nav-icon { font-size: 16px; width: 20px; text-align: center; } 
+        
+        .main { flex: 1; padding: 24px; max-width: 1400px; margin: 0 auto; width: 100%; } 
+        .tab-content { display: none; } 
+        .tab-content.active { display: block; animation: fadeIn 0.2s ease-out; } 
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } } 
+        
+        .page-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; gap: 12px; } 
+        .page-title { font-family: 'Baloo 2', cursive; font-size: 24px; font-weight: 800; color: var(--ink); line-height: 1.2; } 
+        .page-sub { font-size: 13px; color: var(--ink-muted); margin-top: 2px; } 
+        
+        .card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; margin-bottom: 24px; } 
+        .card-header { padding: 16px 20px; border-bottom: 1px solid var(--border-soft); display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; } 
+        .card-title { font-family: 'Baloo 2', cursive; font-size: 16px; font-weight: 700; color: var(--ink); display: flex; align-items: center; gap: 8px; } 
+        .card-body { padding: 20px; } 
+        
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-bottom: 24px; } 
+        .stat-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 20px; display: flex; align-items: center; justify-content: space-between; box-shadow: var(--shadow); position: relative; overflow: hidden; } 
+        .stat-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; } 
+        .stat-green::before { background: var(--green); } 
+        .stat-red::before { background: var(--red); }
+        .stat-amber::before { background: var(--amber); } 
+        .stat-blue::before { background: var(--blue); } 
+        .stat-label { font-size: 12px; font-weight: 700; color: var(--ink-muted); text-transform: uppercase; letter-spacing: 0.5px; } 
+        .stat-value { font-family: 'Baloo 2', cursive; font-size: 26px; font-weight: 800; margin-top: 2px; line-height: 1.2; } 
+        .stat-green .stat-value { color: var(--green); } 
+        .stat-red .stat-value { color: var(--red); }
+        .stat-amber .stat-value { color: var(--amber); } 
+        .stat-blue .stat-value { color: var(--blue); } 
+        .stat-icon { font-size: 32px; opacity: 0.7; } 
+        
+        .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; align-items: start; } 
+        .grid-3-2 { display: grid; grid-template-columns: 1.2fr 1.8fr; gap: 20px; align-items: start; } 
+        .grid-dashboard { display: grid; grid-template-columns: 1.1fr 1.9fr; gap: 20px; } 
+
+        .form-group { margin-bottom: 16px; } 
+        .form-label { display: block; font-size: 12px; font-weight: 700; color: var(--ink-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; } 
+        .form-input, .form-select { width: 100%; padding: 10px 14px; font-family: 'Mukta', sans-serif; font-size: 14px; font-weight: 600; color: var(--ink); background: white; border: 1.5px solid var(--border); border-radius: var(--radius-sm); transition: border-color 0.2s, box-shadow 0.2s; outline: none; } 
+        .form-input:focus, .form-select:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(26,86,219,0.1); } 
+        .form-input[readonly] { background: var(--surface); color: var(--ink-muted); cursor: not-allowed; } 
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; } 
+        .form-row-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; } 
+        
+        .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 10px 20px; font-family: 'Mukta', sans-serif; font-size: 14px; font-weight: 700; border: none; border-radius: var(--radius-sm); cursor: pointer; transition: all 0.15s; white-space: nowrap; text-decoration: none; } 
+        .btn-green { background: var(--green); color: white; } 
+        .btn-green:hover { background: #006644; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,135,90,0.2); } 
+        .btn-blue { background: var(--blue); color: white; } 
+        .btn-blue:hover { background: #1340A8; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(26,86,219,0.2); } 
+        .btn-saffron { background: var(--saffron); color: white; } 
+        .btn-saffron:hover { background: var(--saffron-dark); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(255,107,0,0.2); } 
+        .btn-red { background: var(--red); color: white; } 
+        .btn-red:hover { background: #B01818; transform: translateY(-1px); } 
+        .btn-ghost { background: var(--surface); color: var(--ink-soft); border: 1.5px solid var(--border); } 
+        .btn-ghost:hover { background: var(--border); } 
+        .btn-sm { padding: 6px 12px; font-size: 12px; border-radius: 6px; } 
+        .btn-full { width: 100%; } 
+        .btn-print { background: #7C3AED; color: white; } 
+        .btn-whatsapp { background: var(--whatsapp); color: white; }
+        .btn-whatsapp:hover { background: #1ebea5; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(37,211,102,0.2); }
+        
+        .table-wrap { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 4px; border-radius: var(--radius-sm); border: 1px solid var(--border-soft); } 
+        table { width: 100%; border-collapse: collapse; font-size: 13.5px; text-align: left; min-width: 500px; } 
+        thead th { background: var(--surface); color: var(--ink-muted); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; padding: 12px 16px; border-bottom: 2px solid var(--border); white-space: nowrap; } 
+        tbody td { padding: 12px 16px; border-bottom: 1px solid var(--border-soft); font-weight: 500; vertical-align: middle; white-space: nowrap; } 
+        tbody tr:hover { background: var(--surface); } 
+        
+        .badge { display: inline-block; padding: 3px 9px; border-radius: 20px; font-size: 11px; font-weight: 700; text-align: center; } 
+        .badge-green { background: var(--green-light); color: var(--green); } 
+        .badge-red { background: var(--red-light); color: var(--red); } 
+        .badge-amber { background: var(--amber-light); color: var(--amber); } 
+        .badge-blue { background: var(--blue-light); color: var(--blue); } 
+        
+        .divider { height: 1px; background: var(--border); margin: 16px 0; } 
+        .section-divider { font-size: 11px; font-weight: 700; color: var(--ink-muted); text-transform: uppercase; letter-spacing: 0.6px; margin: 18px 0 12px; display: flex; align-items: center; gap: 8px; } 
+        .section-divider::after { content: ''; flex: 1; height: 1px; background: var(--border); } 
+        
+        .radio-toggle { display: flex; background: var(--surface); padding: 4px; border-radius: var(--radius-sm); gap: 4px; margin-bottom: 12px; width: 100%; }
+        .radio-toggle label { flex: 1; text-align: center; padding: 8px; font-size: 13px; font-weight: 700; color: var(--ink-soft); cursor: pointer; border-radius: 6px; transition: background 0.2s, color 0.2s; white-space: nowrap; }
+        .radio-toggle input { display: none; }
+        .radio-toggle input:checked + label { background: white; color: var(--blue); box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
+        
+        .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(10,10,30,0.6); z-index: 200; align-items: center; justify-content: center; padding: 16px; overflow-y: auto; } 
+        .modal-overlay.open { display: flex; } 
+        .modal-box { background: white; border-radius: var(--radius); box-shadow: var(--shadow-lg); width: 100%; max-width: 540px; display: flex; flex-direction: column; max-height: 90vh; overflow: hidden; animation: modalIn 0.2s cubic-bezier(.25,1,.5,1); } 
+        @keyframes modalIn { from { opacity: 0; transform: scale(0.95) translateY(10px); } to { opacity: 1; transform: scale(1) translateY(0); } } 
+        .modal-header { padding: 16px 20px; border-bottom: 1px solid var(--border-soft); display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; } 
+        .modal-title { font-family: 'Baloo 2', cursive; font-size: 18px; font-weight: 800; } 
+        .modal-close { background: var(--surface); border: none; width: 32px; height: 32px; border-radius: 50%; font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--ink-muted); transition: background 0.2s; } 
+        .modal-close:hover { background: var(--border-soft); color: var(--ink); }
+        .modal-body { padding: 20px; overflow-y: auto; flex: 1; } 
+        .modal-footer { padding: 14px 20px; border-top: 1px solid var(--border-soft); display: flex; gap: 12px; justify-content: flex-end; flex-shrink: 0; } 
+        
+        #toast { position: fixed; bottom: 24px; right: 24px; background: var(--ink); color: white; padding: 12px 20px; border-radius: var(--radius-sm); font-size: 14px; font-weight: 600; z-index: 999; display: none; align-items: center; gap: 10px; box-shadow: var(--shadow-lg); max-width: calc(100vw - 48px); animation: fadeIn 0.15s ease; } 
+        #toast.show { display: flex; } 
+
+        .print-bill { background: white; border-radius: var(--radius-sm); border: 1px solid var(--border); width: 100%; } 
+        .bill-header { text-align: center; padding: 16px; border-bottom: 2px dashed var(--border); } 
+        .bill-total { display: flex; flex-direction: column; align-items: flex-end; padding: 14px 16px; gap: 4px; border-top: 2px dashed var(--border); } 
+        .bill-total-row { display: flex; justify-content: space-between; width: 100%; max-width: 240px; font-size: 13px; gap: 16px; } 
+        .bill-total-row.grand { font-size: 16px; font-weight: 800; color: var(--green); font-family: 'Baloo 2', cursive; border-top: 1px solid var(--border); padding-top: 6px; margin-top: 4px; }
+        
+        .empty-state { text-align: center; padding: 24px 12px; color: var(--ink-muted); font-weight: 600; font-size: 13px; }
+        .low-stock-list { list-style: none; }
+        
+        .mobile-bottom-nav { 
+            display: none; position: fixed; bottom: 0; left: 0; right: 0; height: 60px; background: var(--card); border-top: 1px solid var(--border); z-index: 150; align-items: center; padding: 0 8px; box-shadow: 0 -4px 16px rgba(0,0,0,0.04); overflow-x: auto; white-space: nowrap; -webkit-overflow-scrolling: touch; 
+        }
+        .mobile-bottom-nav::-webkit-scrollbar { display: none; } 
+        
+        .mobile-nav-btn { 
+            display: inline-flex; flex-direction: column; align-items: center; justify-content: center; background: none; border: none; color: var(--ink-soft); font-family: 'Mukta', sans-serif; font-size: 11px; font-weight: 600; padding: 0 16px; height: 100%; cursor: pointer; gap: 2px; flex-shrink: 0; 
+        }
+        .mobile-nav-btn .m-nav-icon { font-size: 18px; line-height: 1; }
+        .mobile-nav-btn.active { color: var(--blue); font-weight: 700; }
+
+        @media (max-width: 1024px) { .grid-3-2 { grid-template-columns: 1fr; } }
+        @media (max-width: 768px) { 
+            .sidebar { display: none; } 
+            .topbar { padding: 0 16px; height: 56px; }
+            .brand { font-size: 19px; }
+            .layout { min-height: calc(100vh - 116px); padding-bottom: 60px; } 
+            .main { padding: 16px; } 
+            .grid-dashboard { grid-template-columns: 1fr; gap: 16px; }
+            .mobile-bottom-nav { display: flex; } 
+            .page-header { flex-direction: column; align-items: flex-start; gap: 8px; margin-bottom: 16px; }
+            .page-title { font-size: 20px; }
+            .card { margin-bottom: 16px; border-radius: var(--radius-sm); }
+            .card-body { padding: 16px; }
+            .card-header { padding: 12px 16px; }
+            .stats-grid { gap: 12px; margin-bottom: 16px; }
+            .stat-card { padding: 14px 16px; }
+            .stat-value { font-size: 22px; }
+            .stat-icon { font-size: 26px; }
+            #live-time { display: none; }
+        } 
+        @media (max-width: 480px) {
+            .form-row, .form-row-3 { grid-template-columns: 1fr; gap: 0; }
+            .form-group { margin-bottom: 12px; }
+            .topbar-select { font-size: 11px; padding: 4px 6px; max-width: 110px; }
+            .btn { width: 100%; }
+            .modal-box { max-height: 95vh; border-radius: var(--radius-sm); }
+            .modal-footer { flex-direction: column; }
+            .modal-footer .btn { width: 100%; }
+        }
+
+        @media print { 
+            body * { visibility: hidden; } 
+            #print-invoice-area, #print-invoice-area * { visibility: visible; } 
+            #print-invoice-area { position: absolute; top: 0; left: 0; right: 0; width: 100%; padding: 0; background: white; } 
+            .modal-overlay, .modal-box { position: absolute; background: none; box-shadow: none; display: block; overflow: visible; max-height: none; }
+            .modal-header, .modal-footer { display: none !important; }
+        } 
+    </style>
+</head>
+<body>
+    <div class="topbar">
+        <div class="brand">📈 Vyapar PRO <span class="brand-badge">SMART</span></div>
+        <div class="topbar-right">
+            <span id="live-time">⏱️ Loading...</span>
+            <select id="lang-selector" class="topbar-select" onchange="changeLanguage()">
+                <option value="en">English</option>
+                <option value="hi" selected>Hindi (हिंदी)</option>
+                <option value="as">Assamese (অসমীয়া)</option>
+                <option value="bn">Bengali (বাংলা)</option>
+            </select>
+            <select id="industry-selector" class="topbar-select" onchange="changeIndustry()">
+                <option value="grocery">🏪 Grocery / Spice</option>
+                <option value="meat">🥩 Meat & Fish Store</option>
+                <option value="taxi">🚖 Taxi & Transport</option>
+            </select>
+        </div>
+    </div>
+
+    <div id="toast">✅ Action Successful</div>
+
+    <script>
+        // ==========================================
+        // 1. ADDED: SQLITE DATABASE VARIABLES
+        // ==========================================
+        let sqliteDb = null;
+        
+        // ==========================================
+        // 2. ADDED: SQLITE INITIALIZATION FUNCTION
+        // ==========================================
+        async function initSQLite() {
+            try {
+                // Check if running inside Capacitor with SQLite plugin
+                if (window.Capacitor && window.Capacitor.Plugins.CapacitorSQLite) {
+                    const sqlite = window.Capacitor.Plugins.CapacitorSQLite;
+                    
+                    // Create Connection
+                    sqliteDb = await sqlite.createConnection({
+                        database: "vyapar_pro_db",
+                        version: 1,
+                        encrypted: false,
+                        mode: "no-encryption"
+                    });
+                    
+                    await sqliteDb.open();
+                    
+                    // Create Tables to match your data structure
+                    const query = `
+                        CREATE TABLE IF NOT EXISTS products (id INTEGER PRIMARY KEY, name TEXT, price REAL, cost REAL, stock REAL, unit TEXT, limit_val REAL);
+                        CREATE TABLE IF NOT EXISTS sales (id INTEGER PRIMARY KEY, billNo TEXT, custName TEXT, custPhone TEXT, total REAL, payment TEXT, date TEXT, items_json TEXT);
+                        CREATE TABLE IF NOT EXISTS khata (id INTEGER PRIMARY KEY, name TEXT, phone TEXT, type TEXT, amount REAL, note TEXT, date TEXT);
+                        CREATE TABLE IF NOT EXISTS expenses (id INTEGER PRIMARY KEY, category TEXT, amount REAL, note TEXT, date TEXT);
+                    `;
+                    await sqliteDb.execute({ statements: query });
+                    
+                    console.log("✅ SQLite Database Ready!");
+                } else {
+                    console.warn("⚠️ SQLite Plugin not found. App running in Web Browser Mode (LocalStorage Fallback).");
+                }
+            } catch (error) {
+                console.error("❌ SQLite Error: ", error);
+            }
+        }
+
+        const langData = {
+            en: {
+                menu: "Menu", ops: "Operations", reports: "Reports", nav_dash: "Dashboard", nav_bill: "New Bill", nav_stock: "Product Stock", nav_khata: "Udhar Khata", nav_exp: "Expenses", nav_pl: "Profit & Loss",
+                dash_title: "Dashboard Overview", st_sales: "Total Sales (Paid)", st_due: "Udhar Baki (Due)", st_profit: "Net Profit", dash_low: "Low Stock Alert", dash_recent: "Recent Bills", bill_entry: "New Bill Entry",
+                c_name: "Customer Name", c_phone: "Phone Number", add_items: "Add Items", p_select: "Select Product", p_rate: "Rate (₹)", p_avail: "Available", p_qty: "Quantity", "btn-add": "+ Add Item", bill_prev: "Bill Preview",
+                t_item: "Item", t_qty: "Qty", t_rate: "Rate", t_amt: "Amount", pay_type: "Payment Type", btn_save_bill: "Confirm & Save Bill", recent_saved_bills: "Saved Bills", t_cust: "Customer", t_items: "Items", t_action: "Action",
+                add_new_prod: "Add New Product", p_name_lbl: "Product Name", p_sale_lbl: "Sale Price (₹)", p_stock_lbl: "Opening Stock", p_unit_lbl: "Unit Type", p_limit_lbl: "Low Stock Limit", btn_save_prod: "Save Product", prod_list: "Product List",
+                khata_entry: "New Ledger Entry", v_name: "Customer/Vendor Name", trans_type: "Transaction Type", btn_save_khata: "Save Entry", pl_locked_title: "Report Locked Securely", pl_pin_msg: "Enter Owner PIN", unlock: "Unlock Report"
+            },
+            hi: {
+                menu: "मेन्यू", ops: "ऑपरेशन्स", reports: "रिपोर्ट्स", nav_dash: "डैशबोर्ड", nav_bill: "नया बिल", nav_stock: "स्टॉक सूची", nav_khata: "उधार खाता", nav_exp: "खर्चा बुक", nav_pl: "लाभ-हानि रिपोर्ट",
+                dash_title: "डैशबोर्ड ओवरव्यू", st_sales: "कुल नगद बिक्री", st_due: "कुल उधार बाकी", st_profit: "शुद्ध मुनाफा", dash_low: "कम स्टॉक अलर्ट", dash_recent: "हालिया bill सूची", bill_entry: "नई बिल एंट्री",
+                c_name: "ग्राहक का नाम", c_phone: "फ़ोन नंबर", add_items: "सामान जोड़ें", p_select: "सामान चुनें", p_rate: "रेट (₹)", p_avail: "उपलब्ध स्टॉक", p_qty: "मात्रा / वजन", "btn-add": "+ आइटम जोड़ें", bill_prev: "बिल प्रिव्यू",
+                t_item: "सामान", t_qty: "मात्रा", t_rate: "दर", t_amt: "कुल रकम", pay_type: "भुगतान प्रकार", btn_save_bill: "बिल सुरक्षित और सेव करें", recent_saved_bills: "सुरक्षित किए गए बिल", t_cust: "ग्राहक", t_items: "सामान संख्या", t_action: "कार्रवाई",
+                add_new_prod: "नया प्रोडक्ट जोड़ें", p_name_lbl: "प्रोडक्ट का नाम", p_sale_lbl: "बिक्री मूल्य (₹)", p_stock_lbl: "शुरुआती स्टॉक", p_unit_lbl: "यूनิต प्रकार", p_limit_lbl: "लो स्टॉक लिमिट", btn_save_prod: "प्रोडक्ट सुरक्षित करें", prod_list: "स्टॉक सूची",
+                khata_entry: "खाता बही नई एंट्री", v_name: "ग्राहक / व्यापारी नाम", trans_type: "लेनदेन प्रकार", btn_save_khata: "एंट्री सुरक्षित करें", pl_locked_title: "रिपोर्ट लॉक है", pl_pin_msg: "मालिक का पिन दर्ज करें", unlock: "अनलॉक रिपोर्ट"
+            },
+            // ... (Aapki Baki Languages as-it-is rahengi)
+        };
+
+        // BAKI PURANE VARIABLES WAISE HI RAHENGE
+        let shopProfile = JSON.parse(localStorage.getItem('vp_shop_profile') || '{"name":"Rupali Store","phone":"+91 9999999999","address":"Main Bazaar, India"}');
+        let securityKeys = JSON.parse(localStorage.getItem('vp_security_keys') || '{"owner":"1234","manager":"5555"}');
+        let products = JSON.parse(localStorage.getItem('vp_products') || '[]');
+        let sales = JSON.parse(localStorage.getItem('vp_sales') || '[]');
+        let khata = JSON.parse(localStorage.getItem('vp_khata') || '[]');
+        let expenses = JSON.parse(localStorage.getItem('vp_expenses') || '[]');
+        let manualCosts = JSON.parse(localStorage.getItem('vp_manual_costs') || '[]'); 
+        let currentBillItems = [];
+        let currentIndustry = 'grocery';
+        let isSettingsUnlocked = false;
+
+        const industryConfig = {
+            grocery: { name: 'Grocery & Spice Store', sub: 'Quality Spices | Best Price', navStock: 'Product Stock' },
+            meat: { name: 'Meat & Fish Store', sub: 'Fresh Daily | Quality Guaranteed', navStock: 'Stock / Inventory' },
+            taxi: { name: 'Taxi & Transport', sub: 'Safe & On-Time | Fleet Management', navStock: 'Vehicle / Routes' }
+        };
+
+        function init() {
+            updateClock();
+            setInterval(updateClock, 1000);
+            if(!localStorage.getItem('vp_bill_counter')) {
+                localStorage.setItem('vp_bill_counter', '1000');
+            }
+            generateBillNo();
+            renderAll();
+            document.getElementById('e-date').valueAsDate = new Date();
+            document.getElementById('pl-manual-cost-date').valueAsDate = new Date();
+            
+            const firstDay = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
+            document.getElementById('pl-start-date').valueAsDate = firstDay;
+            document.getElementById('pl-end-date').valueAsDate = new Date();
+
+            changeLanguage();
+            loadSettingsFormValues();
+            updateHeaderBrandingText();
+        }
+
+        // ... AAPKE BAKI SAARE FUNCTIONS (renderAll, updateClock, switchTab, aadi) WAHIN RAHENGE ...
+
+        // ==========================================
+        // 3. MODIFIED: WINDOW ONLOAD 
+        // ==========================================
+        // Pehle seedha init() hota tha, ab hum pehle SQLite ko start karenge fir app ko.
+        window.onload = async function() {
+            await initSQLite();  // Step 1: Database Setup wait karo
+            init();              // Step 2: Apna UI aur App chalu karo
+        };
+    </script>
+</body>
+</html>
