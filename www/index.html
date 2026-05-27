@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vyapar PRO SMART</title>
     <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&family=Mukta:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
     <style>
         :root { 
             --saffron: #FF6B00; --saffron-light: #FFF3E8; --saffron-dark: #CC5200; 
@@ -242,11 +245,12 @@
         <div class="topbar-right">
             <span id="live-time">⏱️ Loading...</span>
             <select id="lang-selector" class="topbar-select" onchange="changeLanguage()">
-                <option value="en">English</option>
-                <option value="hi" selected>Hindi (हिंदी)</option>
-                <option value="as">Assamese (অসমীয়া)</option>
-                <option value="bn">Bengali (বাংলা)</option>
-            </select>
+    <option value="en" selected>English</option>
+    <option value="hi">Hindi (हिंदी)</option>
+    <option value="as">Assamese (অসমীয়া)</option>
+    <option value="bn">Bengali (বাংলা)</option>
+</select>
+
             <select id="industry-selector" class="topbar-select" onchange="changeIndustry()">
                 <option value="grocery">🏪 Grocery / Spice</option>
                 <option value="meat">🥩 Meat & Fish Store</option>
@@ -355,7 +359,24 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label" data-key="p_qty">Quantity</label>
-                                    <input type="number" id="s-qty" class="form-input" step="any">
+                                    <div style="display:flex; gap:6px;">
+                                        <input type="number" id="s-qty" class="form-input" step="any" placeholder="0" style="flex:1;">
+                                        <select id="s-qty-unit" class="form-select" style="width:90px; padding:8px 4px;">
+    <option value="Pcs">Pcs</option>
+    <option value="Kg">Kg</option>
+    <option value="Gram">Gram</option>
+    <option value="Litre">Litre</option>
+    <option value="Meter">Meter</option>
+    <option value="Feet">Feet</option>
+    <option value="Sq.Ft">Sq.Ft</option>
+    <option value="Bag">Bag</option>
+    <option value="Roll">Roll</option>
+    <option value="Set">Set</option>
+    <option value="Packet">Packet</option>
+    <option value="Box">Box</option>
+</select>
+
+                                    </div>
                                 </div>
                             </div>
                             <button class="btn btn-blue btn-full" onclick="addItemToBill()" data-key="btn-add">+ Add Item</button>
@@ -437,13 +458,20 @@
                                 <div class="form-group">
                                     <label class="form-label" data-key="p_unit_lbl">Unit Type</label>
                                     <select id="p-unit" class="form-select">
-                                        <option value="Pcs">Pcs (नग)</option>
-                                        <option value="Kg">Kg (किलोग्राम)</option>
-                                        <option value="Gram">Gram (ग्राम)</option>
-                                        <option value="Litre">Litre (लीटर)</option>
-                                        <option value="Packet">Packet</option>
-                                        <option value="Box">Box</option>
-                                    </select>
+    <option value="Pcs">Pcs (नग)</option>
+    <option value="Kg">Kg (किलोग्राम)</option>
+    <option value="Gram">Gram (ग्राम)</option>
+    <option value="Litre">Litre (लीटर)</option>
+    <option value="Meter">Meter (मीटर)</option>
+    <option value="Feet">Feet (फुट)</option>
+    <option value="Sq.Ft">Sq.Ft (स्क्वायर फुट)</option>
+    <option value="Bag">Bag (बोरी)</option>
+    <option value="Roll">Roll (रोल)</option>
+    <option value="Set">Set (सेट)</option>
+    <option value="Packet">Packet (पैकेट)</option>
+    <option value="Box">Box (बॉक्स)</option>
+</select>
+
                                 </div>
                             </div>
                             <div class="form-group">
@@ -750,7 +778,8 @@
             <div class="modal-footer">
                 <button class="btn btn-ghost" onclick="closePrintModal()">Cancel</button>
                 <button class="btn btn-whatsapp" id="modal-whatsapp-btn" target="_blank">💬 WhatsApp Share</button>
-                <button class="btn btn-green" onclick="window.print()">🖨️ Print / Save PDF</button>
+                <button class="btn btn-green" onclick="generatePDF()">🖨️ Print / Save PDF</button>
+
             </div>
         </div>
     </div>
@@ -1130,6 +1159,10 @@
             const opt = sel.options[sel.selectedIndex];
             document.getElementById('s-price').value = opt.dataset.price || '';
             document.getElementById('s-avail').value = opt.dataset.stock ? opt.dataset.stock + ' ' + (opt.dataset.unit || '') : '';
+            
+            if(opt.dataset.unit) {
+                document.getElementById('s-qty-unit').value = opt.dataset.unit;
+            }
         }
 
         /* NEW PHONEBOOK POPULATION FOR BILLING */
@@ -1171,16 +1204,40 @@
         function addItemToBill() {
             const sel = document.getElementById('s-id');
             const prodId = parseInt(sel.value);
-            const qty = parseFloat(document.getElementById('s-qty').value) || 0;
-            if (!prodId || qty <= 0) return;
+            const enteredQty = parseFloat(document.getElementById('s-qty').value) || 0;
+            const selectedUnit = document.getElementById('s-qty-unit').value;
+            
+            if (!prodId || enteredQty <= 0) return;
             const prod = products.find(p => p.id === prodId);
-            if (qty > prod.stock) { showToast('❌ Insufficient stock!', 'red'); return; }
+            
+            let qtyForStock = enteredQty;
+            let itemTotal = enteredQty * prod.price;
 
-            const existing = currentBillItems.find(i => i.prodId === prodId);
+            if (prod.unit === 'Kg' && selectedUnit === 'Gram') {
+                qtyForStock = enteredQty / 1000;
+                itemTotal = (prod.price / 1000) * enteredQty;
+            } else if (prod.unit === 'Gram' && selectedUnit === 'Kg') {
+                qtyForStock = enteredQty * 1000;
+                itemTotal = (prod.price * 1000) * enteredQty;
+            }
+
+            if (qtyForStock > prod.stock) { showToast('❌ Insufficient stock!', 'red'); return; }
+
+            const existing = currentBillItems.find(i => i.prodId === prodId && i.unit === selectedUnit);
             if (existing) {
-                existing.qty += qty; existing.total = existing.qty * existing.price;
+                existing.qty += enteredQty;
+                existing.deductQty += qtyForStock;
+                existing.total += parseFloat(itemTotal.toFixed(2));
             } else {
-                currentBillItems.push({ prodId, name: prod.name, qty, price: prod.price, total: qty * prod.price, unit: prod.unit });
+                currentBillItems.push({ 
+                    prodId, 
+                    name: prod.name, 
+                    qty: enteredQty, 
+                    deductQty: qtyForStock, 
+                    price: prod.price, 
+                    total: parseFloat(itemTotal.toFixed(2)), 
+                    unit: selectedUnit 
+                });
             }
             renderBillPreview(); updateBillGrandTotalDisplay();
             document.getElementById('s-qty').value = '';
@@ -1228,7 +1285,7 @@
 
             sales.push(bill);
             currentBillItems.forEach(bi => {
-                const p = products.find(p => p.id === bi.prodId); if (p) p.stock -= bi.qty;
+                const p = products.find(p => p.id === bi.prodId); if (p) p.stock -= (bi.deductQty || bi.qty);
             });
 
             if (payment === 'udhar') {
@@ -1247,7 +1304,8 @@
         }
 
         function openBillModal(b) {
-            const rows = b.items.map((it, i) => `<tr><td>${i+1}</td><td>${it.name}</td><td>${it.qty}</td><td>₹${it.price}</td><td>₹${it.total}</td></tr>`).join('');
+            const rows = b.items.map((it, i) => `<tr><td>${i+1}</td><td>${it.name}</td><td>${it.qty} ${it.unit || ''}</td><td>₹${it.price}</td><td>₹${it.total}</td></tr>`).join('');
+
             document.getElementById('print-invoice-area').innerHTML = `
                 <div class="print-bill" style="padding:15px;">
                     <div class="bill-header"><h2>${shopProfile.name}</h2><p>${shopProfile.address}</p></div>
@@ -1515,6 +1573,29 @@
             el.style.background = color === 'red' ? 'var(--red)' : 'var(--ink)';
             el.style.display = 'flex'; setTimeout(() => { el.style.display = 'none'; }, 2000);
         }
+
+function generatePDF() {
+    // Print karne se pehle page ko top par scroll kar dein (Mobile blank page issue fix)
+    window.scrollTo(0, 0);
+    
+    const element = document.getElementById('print-invoice-area');
+    const opt = {
+        margin:       0.3,
+        filename:     'Vyapar_Bill.pdf',
+        image:        { type: 'jpeg', quality: 0.98 },
+        html2canvas:  { 
+            scale: 2, 
+            scrollY: 0,                 
+            useCORS: true,              
+            backgroundColor: '#ffffff'  
+        },
+        jsPDF:        { unit: 'in', format: 'a5', orientation: 'portrait' }
+    };
+    
+    // PDF generate karke download karna
+    html2pdf().set(opt).from(element).save();
+}
+
 
         window.onload = init;
     </script>
