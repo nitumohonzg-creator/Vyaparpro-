@@ -152,7 +152,7 @@
         .empty-state { text-align: center; padding: 24px 12px; color: var(--ink-muted); font-weight: 600; font-size: 13px; }
         .low-stock-list { list-style: none; }
         
-        /* MOBILE BOTTOM NAVIGATION BAR */
+        /* UPDATED MOBILE BOTTOM NAVIGATION BAR (FIXED) */
         .mobile-bottom-nav { 
             display: none; 
             position: fixed; 
@@ -164,7 +164,8 @@
             border-top: 1px solid var(--border); 
             z-index: 150; 
             align-items: center; 
-            padding: 0 8px; 
+            justify-content: space-around; /* Distributes buttons evenly */
+            padding: 0 4px; 
             box-shadow: 0 -4px 16px rgba(0,0,0,0.04); 
             overflow-x: auto;                  
             white-space: nowrap;               
@@ -173,7 +174,7 @@
         .mobile-bottom-nav::-webkit-scrollbar { display: none; } 
         
         .mobile-nav-btn { 
-            display: inline-flex; 
+            display: flex; /* Changed from inline-flex */
             flex-direction: column; 
             align-items: center; 
             justify-content: center; 
@@ -181,19 +182,21 @@
             border: none; 
             color: var(--ink-soft); 
             font-family: 'Mukta', sans-serif; 
-            font-size: 11px; 
+            font-size: 10px; /* Reduced to fit 7 buttons */
             font-weight: 600; 
-            padding: 0 16px;                   
+            padding: 0 4px; /* Reduced padding */
             height: 100%; 
             cursor: pointer; 
             gap: 2px; 
-            flex-shrink: 0;                    
+            flex-shrink: 1; /* Allow shrinking on very small screens */
         }
         .mobile-nav-btn .m-nav-icon { font-size: 18px; line-height: 1; }
         .mobile-nav-btn.active { color: var(--blue); font-weight: 700; }
 
         /* RESPONSIVE BREAKPOINTS */
-        @media (max-width: 1024px) { .grid-3-2 { grid-template-columns: 1fr; } }
+        @media (max-width: 1024px) {
+            .grid-3-2 { grid-template-columns: 1fr; }
+        }
         @media (max-width: 768px) { 
             .sidebar { display: none; } 
             .topbar { padding: 0 16px; height: 56px; }
@@ -201,7 +204,7 @@
             .layout { min-height: calc(100vh - 116px); padding-bottom: 60px; } 
             .main { padding: 16px; } 
             .grid-dashboard { grid-template-columns: 1fr; gap: 16px; }
-            .mobile-bottom-nav { display: flex; } 
+            .mobile-bottom-nav { display: flex; } /* visible on mobile screens */
             .page-header { flex-direction: column; align-items: flex-start; gap: 8px; margin-bottom: 16px; }
             .page-title { font-size: 20px; }
             .card { margin-bottom: 16px; border-radius: var(--radius-sm); }
@@ -278,6 +281,7 @@
         </div>
 
         <div class="main">
+            
             <div id="tab-dashboard" class="tab-content active">
                 <div class="page-header">
                     <div>
@@ -318,7 +322,8 @@
                         <div class="card-body">
                             <div class="form-group">
                                 <label class="form-label">Phonebook / Existing Account से चुनें</label>
-                                <select id="bill-cust-dropdown" class="form-select" onchange="fillCustomerFromDropdown()"></select>
+                                <select id="bill-cust-dropdown" class="form-select" onchange="fillCustomerFromDropdown()">
+                                    </select>
                             </div>
                             <div class="form-group">
                                 <label class="form-label" data-key="c_name">Customer Name</label>
@@ -812,13 +817,7 @@
 
     <div id="toast">✅ Action Successful</div>
 
-    <script type="module">
-        import { Capacitor } from '@capacitor/core';
-        import { CapacitorSQLite, SQLiteConnection } from '@capacitor-community/sqlite';
-
-        const sqlite = new SQLiteConnection(CapacitorSQLite);
-        let db = null;
-
+    <script>
         const langData = {
             en: {
                 menu: "Menu", ops: "Operations", reports: "Reports", nav_dash: "Dashboard", nav_bill: "New Bill", nav_stock: "Product Stock", nav_khata: "Udhar Khata", nav_exp: "Expenses", nav_pl: "Profit & Loss",
@@ -854,13 +853,13 @@
             }
         };
 
-        let shopProfile = {name:"Rupali Store",phone:"+91 9999999999",address:"Main Bazaar, India"};
-        let securityKeys = {owner:"1234",manager:"5555"};
-        let products = [];
-        let sales = [];
-        let khata = [];
-        let expenses = [];
-        let manualCosts = [];
+        let shopProfile = JSON.parse(localStorage.getItem('vp_shop_profile') || '{"name":"Rupali Store","phone":"+91 9999999999","address":"Main Bazaar, India"}');
+        let securityKeys = JSON.parse(localStorage.getItem('vp_security_keys') || '{"owner":"1234","manager":"5555"}');
+        let products = JSON.parse(localStorage.getItem('vp_products') || '[]');
+        let sales = JSON.parse(localStorage.getItem('vp_sales') || '[]');
+        let khata = JSON.parse(localStorage.getItem('vp_khata') || '[]');
+        let expenses = JSON.parse(localStorage.getItem('vp_expenses') || '[]');
+        let manualCosts = JSON.parse(localStorage.getItem('vp_manual_costs') || '[]'); 
         let currentBillItems = [];
         let currentIndustry = 'grocery';
         let isSettingsUnlocked = false;
@@ -871,83 +870,17 @@
             taxi: { name: 'Taxi & Transport', sub: 'Safe & On-Time | Fleet Management', navStock: 'Vehicle / Routes' }
         };
 
-        // ==========================================
-        // 💾 CAPACITOR SQLITE CORE FUNCTIONS
-        // ==========================================
-        async function initSQLiteDB() {
-            try {
-                db = await sqlite.createConnection("vyaparpro_db", false, "no-encryption", 1, false);
-                await db.open();
-
-                const query = `
-                    CREATE TABLE IF NOT EXISTS products (id INTEGER PRIMARY KEY, json_data TEXT);
-                    CREATE TABLE IF NOT EXISTS sales (id INTEGER PRIMARY KEY, json_data TEXT);
-                    CREATE TABLE IF NOT EXISTS khata (id INTEGER PRIMARY KEY, json_data TEXT);
-                    CREATE TABLE IF NOT EXISTS expenses (id INTEGER PRIMARY KEY, json_data TEXT);
-                    CREATE TABLE IF NOT EXISTS manual_costs (id INTEGER PRIMARY KEY, json_data TEXT);
-                    CREATE TABLE IF NOT EXISTS settings (id TEXT PRIMARY KEY, json_data TEXT);
-                `;
-                await db.execute(query);
-                console.log("✅ Capacitor SQLite Tables Ready!");
-                await loadAllAppConfig();
-            } catch (error) {
-                console.error("Capacitor SQLite Init Error: ", error);
-            }
-        }
-
-        async function loadTableData(tableName) {
-            try {
-                const res = await db.query(`SELECT json_data FROM ${tableName}`);
-                let results = [];
-                if (res.values && res.values.length > 0) {
-                    for (let row of res.values) {
-                        results.push(JSON.parse(row.json_data));
-                    }
-                }
-                return results;
-            } catch (error) { return []; }
-        }
-
-        async function saveToSQLite(tableName, dataObject) {
-            try {
-                const id = dataObject.id;
-                const jsonString = JSON.stringify(dataObject);
-                await db.run(`REPLACE INTO ${tableName} (id, json_data) VALUES (?, ?)`, [id, jsonString]);
-            } catch (error) { console.error(`Save Error:`, error); }
-        }
-
-        async function deleteFromSQLite(tableName, id) {
-            try { await db.run(`DELETE FROM ${tableName} WHERE id = ?`, [id]); } 
-            catch (error) { console.error(`Delete Error:`, error); }
-        }
-
-        async function loadAllAppConfig() {
-            products = await loadTableData('products');
-            sales = await loadTableData('sales');
-            // Continuation from loadAllAppConfig()
-            khata = await loadTableData('khata');
-            expenses = await loadTableData('expenses');
-            manualCosts = await loadTableData('manual_costs');
-            
-            // Load Settings if exist
-            const loadedSettings = await loadTableData('settings');
-            loadedSettings.forEach(s => {
-                if(s.id === 'shopProfile') shopProfile = s;
-                if(s.id === 'securityKeys') securityKeys = s;
-            });
-
+        function init() {
             updateClock();
             setInterval(updateClock, 1000);
-            
-            // Bill counter logic
-            if(!localStorage.getItem('vp_bill_counter')) localStorage.setItem('vp_bill_counter', '1000');
+            if(!localStorage.getItem('vp_bill_counter')) {
+                localStorage.setItem('vp_bill_counter', '1000');
+            }
             generateBillNo();
-            
             renderAll();
-            
-            // Set Default Dates
             document.getElementById('e-date').valueAsDate = new Date();
             document.getElementById('pl-manual-cost-date').valueAsDate = new Date();
+            
             const firstDay = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
             document.getElementById('pl-start-date').valueAsDate = firstDay;
             document.getElementById('pl-end-date').valueAsDate = new Date();
@@ -957,234 +890,7 @@
             updateHeaderBrandingText();
         }
 
-        window.onload = () => {
-            initSQLiteDB();
-        };
-
-        // ==========================================
-        // 📦 PRODUCT INVENTORY CRUD (SQLITE)
-        // ==========================================
-        window.saveProduct = async function() {
-            const name = document.getElementById('p-name').value.trim();
-            const price = parseFloat(document.getElementById('p-price').value) || 0;
-            const cost = parseFloat(document.getElementById('p-cost').value) || 0; 
-            const stock = parseFloat(document.getElementById('p-stock').value) || 0;
-            const unit = document.getElementById('p-unit').value;
-            const limit = parseFloat(document.getElementById('p-limit').value) || 5;
-
-            if (!name || price <= 0) { showToast('❌ Fields validation failed!', 'red'); return; }
-
-            const newProduct = { id: Date.now(), name, price, cost, stock, unit, limit };
-            products.push(newProduct);
-            
-            await saveToSQLite('products', newProduct);
-
-            renderProductTable();
-            populateSellDropdown();
-            updateDashboard();
-
-            ['p-name','p-price','p-cost','p-stock','p-limit'].forEach(id => document.getElementById(id).value = '');
-            document.getElementById('p-cost').setAttribute('readonly', true);
-            document.getElementById('p-cost').style.background = 'var(--surface)';
-            showToast('✅ Saved Product: ' + name);
-        };
-
-        window.deleteProduct = async function(id) {
-            const pin = prompt("🔐 Enter Owner PIN:");
-            if (pin !== securityKeys.owner) return;
-            products = products.filter(p => p.id !== id);
-            await deleteFromSQLite('products', id);
-            renderProductTable(); populateSellDropdown();
-        };
-        
-        window.saveEditedCost = async function() {
-            const id = parseInt(document.getElementById('edit-prod-id').value);
-            const price = parseFloat(document.getElementById('edit-prod-price').value) || 0;
-            const cost = parseFloat(document.getElementById('edit-prod-cost').value) || 0;
-            if(price <= 0) return;
-            
-            const prodIndex = products.findIndex(p => p.id === id);
-            if(prodIndex > -1) {
-                products[prodIndex].price = price;
-                products[prodIndex].cost = cost;
-                await saveToSQLite('products', products[prodIndex]);
-            }
-            closeCostModal(); renderAll();
-            showToast("✏️ Product Prices Updated!");
-        };
-
-        // ==========================================
-        // 🧾 BILLING CRUD (SQLITE)
-        // ==========================================
-        window.saveBill = async function() {
-            if (!currentBillItems.length) return;
-            const custName = document.getElementById('cust-name').value.trim() || 'Walk-in Customer';
-            let custPhone = document.getElementById('cust-phone').value.trim();
-            if(custPhone === "+91") custPhone = ""; 
-            const billNo = document.getElementById('cust-billno').value;
-            const payment = document.getElementById('payment-type').value;
-            const totals = calculateBillTotals();
-            const now = new Date();
-            const formattedIsoString = now.toISOString().split('T')[0];
-
-            const bill = {
-                id: Date.now(), billNo, custName, custPhone, items: [...currentBillItems], 
-                subtotal: totals.subtotal, discount: totals.discount, total: totals.grandTotal, payment,
-                isoDate: formattedIsoString,
-                date: now.toLocaleDateString('en-GB'), time: now.toLocaleTimeString('en-GB', {hour:'2-digit', minute:'2-digit'})
-            };
-
-            sales.push(bill);
-            await saveToSQLite('sales', bill);
-
-            // Stock update in DB
-            for (let bi of currentBillItems) {
-                const p = products.find(p => p.id === bi.prodId); 
-                if (p) {
-                    p.stock -= bi.qty;
-                    await saveToSQLite('products', p);
-                }
-            }
-
-            if (payment === 'udhar') {
-                const khataEntry = { id: Date.now() + 1, name: custName, phone: custPhone, type: 'lena', amount: totals.grandTotal, note: 'Bill #' + billNo, isoDate: formattedIsoString, date: now.toLocaleDateString('en-GB', {day:'2-digit', month:'short'}) };
-                khata.push(khataEntry);
-                await saveToSQLite('khata', khataEntry);
-            }
-
-            clearBill(); renderAll(); openBillModal(bill);
-        };
-
-        window.deleteBill = async function(id) {
-            if (prompt("🔑 Manager Password:") !== securityKeys.manager) return;
-            sales = sales.filter(b => b.id !== id); 
-            await deleteFromSQLite('sales', id);
-            renderAll();
-        };
-
-        window.saveEditedBill = async function() {
-            const id = parseInt(document.getElementById('edit-bill-id').value);
-            const updatedName = document.getElementById('edit-bill-name').value;
-            const updatedTotal = parseFloat(document.getElementById('edit-bill-total').value);
-            const updatedPayment = document.getElementById('edit-bill-payment').value;
-            
-            const billIndex = sales.findIndex(b => b.id === id);
-            if(billIndex > -1) {
-                sales[billIndex].custName = updatedName;
-                sales[billIndex].total = updatedTotal;
-                sales[billIndex].payment = updatedPayment;
-                await saveToSQLite('sales', sales[billIndex]);
-            }
-            closeEditModal(); renderAll();
-        };
-
-        // ==========================================
-        // 📑 UDHAR KHATA CRUD (SQLITE)
-        // ==========================================
-        window.saveKhata = async function() {
-            const isExisting = document.getElementById('profile-existing').checked;
-            let name = isExisting ? document.getElementById('k-name-dropdown').value : document.getElementById('k-name').value.trim();
-            let phone = document.getElementById('k-phone').value.trim();
-            if(phone === "+91") phone = "";
-            const type = document.getElementById('k-type').value;
-            const amount = parseFloat(document.getElementById('k-amount').value) || 0;
-            const note = document.getElementById('k-note').value.trim();
-            const isoStringDate = new Date().toISOString().split('T')[0];
-
-            if (!name || amount <= 0) return;
-            
-            const khataEntry = { id: Date.now(), name, phone, type, amount, note, isoDate: isoStringDate, date: new Date().toLocaleDateString('en-GB', {day:'2-digit', month:'short'}) };
-            khata.push(khataEntry);
-            
-            await saveToSQLite('khata', khataEntry);
-            
-            renderKhataTable(); populateKhataDropdown(); populateBillCustomerDropdown(); updateDashboard();
-            ['k-name','k-phone','k-amount','k-note'].forEach(id => { if(document.getElementById(id)) document.getElementById(id).value = ''; });
-            if(document.getElementById('k-phone')) document.getElementById('k-phone').value = '+91';
-            showToast('✅ Khata Entry Saved!');
-        };
-
-        window.deleteKhata = async function(id) { 
-            khata = khata.filter(k => k.id !== id); 
-            await deleteFromSQLite('khata', id);
-            renderKhataTable(); populateKhataDropdown(); populateBillCustomerDropdown(); updateDashboard(); 
-        };
-
-        // ==========================================
-        // 💸 EXPENSES CRUD (SQLITE)
-        // ==========================================
-        window.saveExpense = async function() {
-            const category = document.getElementById('e-category').value;
-            const amount = parseFloat(document.getElementById('e-amount').value) || 0;
-            const note = document.getElementById('e-note').value.trim();
-            const date = document.getElementById('e-date').value;
-            
-            if (amount <= 0 || !date) return;
-            
-            const newExp = { id: Date.now(), category, amount, note, date };
-            expenses.push(newExp);
-            
-            await saveToSQLite('expenses', newExp);
-            
-            renderExpenseTable();
-            document.getElementById('e-amount').value = ''; document.getElementById('e-note').value = '';
-        };
-
-        window.deleteExpense = async function(id) { 
-            expenses = expenses.filter(e => e.id !== id); 
-            await deleteFromSQLite('expenses', id);
-            renderExpenseTable(); 
-        };
-
-        // ==========================================
-        // ⚙️ SYSTEM SETTINGS & MANUAL COSTS (SQLITE)
-        // ==========================================
-        window.saveShopProfile = async function() {
-            const name = document.getElementById('cfg-shop-name').value.trim();
-            const phone = document.getElementById('cfg-shop-phone').value.trim();
-            const address = document.getElementById('cfg-shop-address').value.trim();
-            if(!name) { alert("Shop name cannot be blank!"); return; }
-            
-            shopProfile = { id: 'shopProfile', name, phone, address };
-            await saveToSQLite('settings', shopProfile);
-            
-            updateHeaderBrandingText();
-            showToast("🏪 Shop Identity Profile Saved!");
-        };
-
-        window.saveSecurityKeys = async function() {
-            const owner = document.getElementById('cfg-owner-pin').value.trim();
-            const manager = document.getElementById('cfg-manager-pin').value.trim();
-            if(!owner || !manager) { alert("Passwords cannot be empty!"); return; }
-            
-            securityKeys = { id: 'securityKeys', owner, manager };
-            await saveToSQLite('settings', securityKeys);
-            
-            showToast("🔒 Security Passwords Updated!");
-            lockSettingsPage();
-            document.getElementById('pl-content').style.display = 'none';
-            document.getElementById('pl-locked').style.display = 'block';
-            document.getElementById('pl-pin').value = '';
-        };
-
-        window.injectManualCost = async function() {
-            const amt = parseFloat(document.getElementById('pl-manual-cost-input').value) || 0;
-            const mDate = document.getElementById('pl-manual-cost-date').value;
-            if(amt <= 0 || !mDate) return;
-            
-            const mCost = { id: Date.now(), amount: amt, note: document.getElementById('pl-manual-cost-note').value.trim(), date: mDate };
-            manualCosts.push(mCost);
-            
-            await saveToSQLite('manual_costs', mCost);
-            
-            document.getElementById('pl-manual-cost-input').value = ''; document.getElementById('pl-manual-cost-note').value = '';
-            calculateAndDisplayPL();
-        };
-
-        // ==========================================
-        // 🔄 NORMAL UI / RENDER FUNCTIONS (Exposed globally)
-        // ==========================================
-        window.renderAll = function() {
+        function renderAll() {
             populateSellDropdown();
             renderProductTable();
             renderSalesTable();
@@ -1193,19 +899,21 @@
             populateKhataDropdown(); 
             populateBillCustomerDropdown();
             updateDashboard();
-        };
+        }
 
-        window.updateClock = function() {
+        function updateClock() {
             const now = new Date();
             document.getElementById('live-time').textContent = '⏱️ ' + now.toLocaleTimeString('en-US', {hour:'2-digit', minute:'2-digit'}) + ' | ' + now.toLocaleDateString('en-US', {day:'2-digit', month:'short'});
-        };
+        }
 
-        window.switchTab = function(tab) {
+        function switchTab(tab) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.nav-btn, .mobile-nav-btn').forEach(el => el.classList.remove('active'));
             
             const targetedTabArea = document.getElementById('tab-' + tab);
-            if(targetedTabArea) targetedTabArea.classList.add('active');
+            if(targetedTabArea) {
+                targetedTabArea.classList.add('active');
+            }
             
             const deskBtn = document.getElementById('btn-' + tab);
             if(deskBtn) deskBtn.classList.add('active');
@@ -1230,25 +938,25 @@
                     document.getElementById('settings-gate-pin').value = '';
                 }
             }
-        };
+        }
 
-        window.generateBillNo = function() {
+        function generateBillNo() {
             let currentCounter = parseInt(localStorage.getItem('vp_bill_counter') || '1000');
             currentCounter++;
             localStorage.setItem('vp_bill_counter', currentCounter.toString());
             document.getElementById('cust-billno').value = 'INV-' + currentCounter;
-        };
+        }
 
-        window.changeLanguage = function() {
+        function changeLanguage() {
             const currentLang = document.getElementById('lang-selector').value;
             const dict = langData[currentLang];
             document.querySelectorAll('[data-key]').forEach(el => {
                 const key = el.getAttribute('data-key');
                 if(dict[key]) { el.textContent = dict[key]; }
             });
-        };
+        }
 
-        window.unlockSettingsPage = function() {
+        function unlockSettingsPage() {
             const pinEntered = document.getElementById('settings-gate-pin').value;
             if(pinEntered === securityKeys.owner) {
                 isSettingsUnlocked = true;
@@ -1261,48 +969,102 @@
                 alert("❌ Unauthorized Access Code!");
                 document.getElementById('settings-gate-pin').value = '';
             }
-        };
+        }
 
-        window.lockSettingsPage = function() {
+        function lockSettingsPage() {
             isSettingsUnlocked = false;
             document.getElementById('settings-content').style.display = 'none';
             document.getElementById('settings-locked').style.display = 'block';
             document.getElementById('settings-gate-pin').value = '';
             renderProductTable(); 
             showToast("🔒 Setup Terminals Locked!");
-        };
+        }
 
-        window.changeIndustry = function() {
+        function changeIndustry() {
             currentIndustry = document.getElementById('industry-selector').value;
             updateHeaderBrandingText();
             const cfg = industryConfig[currentIndustry];
             document.getElementById('nav-stock-label').textContent = cfg.navStock;
             showToast('✅ Industry Switch: ' + cfg.name);
-        };
+        }
 
-        window.updateHeaderBrandingText = function() {
+        function updateHeaderBrandingText() {
             const cfg = industryConfig[currentIndustry];
             document.getElementById('dash-industry-sub').textContent = shopProfile.name + " | " + cfg.sub + " | FY 2026-2027";
-        };
+        }
 
-        window.loadSettingsFormValues = function() {
+        function loadSettingsFormValues() {
             document.getElementById('cfg-shop-name').value = shopProfile.name;
             document.getElementById('cfg-shop-phone').value = shopProfile.phone;
             document.getElementById('cfg-shop-address').value = shopProfile.address;
             document.getElementById('cfg-owner-pin').value = securityKeys.owner;
             document.getElementById('cfg-manager-pin').value = securityKeys.manager;
-        };
+        }
 
-        window.unlockCostField = function() {
+        function saveShopProfile() {
+            const name = document.getElementById('cfg-shop-name').value.trim();
+            const phone = document.getElementById('cfg-shop-phone').value.trim();
+            const address = document.getElementById('cfg-shop-address').value.trim();
+            if(!name) { alert("Shop name cannot be blank!"); return; }
+            shopProfile = { name, phone, address };
+            localStorage.setItem('vp_shop_profile', JSON.stringify(shopProfile));
+            updateHeaderBrandingText();
+            showToast("🏪 Shop Identity Profile Saved!");
+        }
+
+        function saveSecurityKeys() {
+            const owner = document.getElementById('cfg-owner-pin').value.trim();
+            const manager = document.getElementById('cfg-manager-pin').value.trim();
+            if(!owner || !manager) { alert("Passwords cannot be empty!"); return; }
+            securityKeys = { owner, manager };
+            localStorage.setItem('vp_security_keys', JSON.stringify(securityKeys));
+            showToast("🔒 Security Passwords Updated!");
+            lockSettingsPage();
+            document.getElementById('pl-content').style.display = 'none';
+            document.getElementById('pl-locked').style.display = 'block';
+            document.getElementById('pl-pin').value = '';
+        }
+
+        function save() {
+            localStorage.setItem('vp_products', JSON.stringify(products));
+            localStorage.setItem('vp_sales', JSON.stringify(sales));
+            localStorage.setItem('vp_khata', JSON.stringify(khata));
+            localStorage.setItem('vp_expenses', JSON.stringify(expenses));
+            localStorage.setItem('vp_manual_costs', JSON.stringify(manualCosts));
+        }
+
+        function unlockCostField() {
             const pin = prompt("🔐 Enter Owner Password:");
             if (pin === securityKeys.owner) {
                 document.getElementById('p-cost').removeAttribute('readonly');
                 document.getElementById('p-cost').style.background = '#FFFFFF';
                 showToast("🔓 Cost Price Unlocked!");
             } else { alert("❌ Unauthorized Access Code!"); }
-        };
+        }
 
-        window.renderProductTable = function() {
+        function saveProduct() {
+            const name = document.getElementById('p-name').value.trim();
+            const price = parseFloat(document.getElementById('p-price').value) || 0;
+            const cost = parseFloat(document.getElementById('p-cost').value) || 0; 
+            const stock = parseFloat(document.getElementById('p-stock').value) || 0;
+            const unit = document.getElementById('p-unit').value;
+            const limit = parseFloat(document.getElementById('p-limit').value) || 5;
+
+            if (!name || price <= 0) { showToast('❌ Fields validation failed!', 'red'); return; }
+
+            products.push({ id: Date.now(), name, price, cost, stock, unit, limit });
+            save();
+            renderProductTable();
+            populateSellDropdown();
+            updateDashboard();
+
+            ['p-name','p-price','p-cost','p-stock','p-limit'].forEach(id => document.getElementById(id).value = '');
+            document.getElementById('p-cost').setAttribute('readonly', true);
+            document.getElementById('p-cost').style.background = 'var(--surface)';
+            showToast('✅ Saved Product: ' + name);
+        }
+
+        function renderProductTable() {
             const tbody = document.getElementById('product-table-body');
             if (!products.length) {
                 tbody.innerHTML = '<tr><td colspan="7"><div class="empty-state">📦 Product List is Empty</div></td></tr>';
@@ -1326,9 +1088,9 @@
                     </td>
                 </tr>`;
             }).join('');
-        };
+        }
 
-        window.editProductCostPrompt = function(id) {
+        function editProductCostPrompt(id) {
             const pin = prompt("🔐 Enter Owner PIN:");
             if (pin !== securityKeys.owner) { alert("❌ Unauthorized Access!"); return; }
             const p = products.find(prod => prod.id === id);
@@ -1338,23 +1100,40 @@
             document.getElementById('edit-prod-price').value = p.price;
             document.getElementById('edit-prod-cost').value = p.cost;
             document.getElementById('edit-cost-modal').classList.add('open');
-        };
+        }
 
-        window.closeCostModal = function() { document.getElementById('edit-cost-modal').classList.remove('open'); };
+        function saveEditedCost() {
+            const id = parseInt(document.getElementById('edit-prod-id').value);
+            const price = parseFloat(document.getElementById('edit-prod-price').value) || 0;
+            const cost = parseFloat(document.getElementById('edit-prod-cost').value) || 0;
+            if(price <= 0) return;
+            products = products.map(p => p.id === id ? { ...p, price, cost } : p);
+            save(); closeCostModal(); renderAll();
+            showToast("✏️ Product Prices Updated!");
+        }
+        function closeCostModal() { document.getElementById('edit-cost-modal').classList.remove('open'); }
 
-        window.populateSellDropdown = function() {
+        function deleteProduct(id) {
+            const pin = prompt("🔐 Enter Owner PIN:");
+            if (pin !== securityKeys.owner) return;
+            products = products.filter(p => p.id !== id);
+            save(); renderProductTable(); populateSellDropdown();
+        }
+
+        function populateSellDropdown() {
             const sel = document.getElementById('s-id');
             if(sel) sel.innerHTML = '<option value="">-- Chunein / Select --</option>' + products.map(p => `<option value="${p.id}" data-price="${p.price}" data-stock="${p.stock}" data-unit="${p.unit}">${p.name} (Stock: ${p.stock})</option>`).join('');
-        };
+        }
 
-        window.updateSellItem = function() {
+        function updateSellItem() {
             const sel = document.getElementById('s-id');
             const opt = sel.options[sel.selectedIndex];
             document.getElementById('s-price').value = opt.dataset.price || '';
             document.getElementById('s-avail').value = opt.dataset.stock ? opt.dataset.stock + ' ' + (opt.dataset.unit || '') : '';
-        };
+        }
 
-        window.populateBillCustomerDropdown = function() {
+        /* NEW PHONEBOOK POPULATION FOR BILLING */
+        function populateBillCustomerDropdown() {
             const dropdown = document.getElementById('bill-cust-dropdown');
             if(!dropdown) return;
             const balances = calculateLedgerBalances();
@@ -1365,9 +1144,9 @@
             }
             dropdown.innerHTML = '<option value="">-- Select Existing Phonebook --</option>' + 
                 keys.map(n => `<option value="${n}" data-phone="${balances[n].phone}">${n} (${balances[n].phone || 'No Phone'})</option>`).join('');
-        };
+        }
 
-        window.fillCustomerFromDropdown = function() {
+        function fillCustomerFromDropdown() {
             const dropdown = document.getElementById('bill-cust-dropdown');
             const selectedOpt = dropdown.options[dropdown.selectedIndex];
             if(!selectedOpt || dropdown.value === "") return;
@@ -1375,17 +1154,21 @@
             document.getElementById('cust-name').value = selectedOpt.value;
             let rawPhone = selectedOpt.dataset.phone || '';
             document.getElementById('cust-phone').value = rawPhone ? rawPhone : "+91";
-        };
+        }
 
-        window.generateWhatsAppLink = function(phone, billNo, totalAmount) {
-            let cleanPhone = phone.replace(/\D/g, ''); 
-            if(cleanPhone.length === 10) { cleanPhone = "91" + cleanPhone; }
+        /* WHATSAPP LINK GENERATOR HELPER */
+        function generateWhatsAppLink(phone, billNo, totalAmount) {
+            let cleanPhone = phone.replace(/\D/g, ''); // non-digits hatao
+            if(cleanPhone.length === 10) {
+                cleanPhone = "91" + cleanPhone; // auto-add India code if 10 digits
+            }
             if(!cleanPhone) return "#";
+            
             let messageText = `Hello, Thank you for shopping with us! Your Bill No: ${billNo} for Amount: ₹${totalAmount} has been generated successfully. Click here to view details.`;
             return `https://api.whatsapp.com/send?phone=${cleanPhone}&text=${encodeURIComponent(messageText)}`;
-        };
+        }
 
-        window.addItemToBill = function() {
+        function addItemToBill() {
             const sel = document.getElementById('s-id');
             const prodId = parseInt(sel.value);
             const qty = parseFloat(document.getElementById('s-qty').value) || 0;
@@ -1401,9 +1184,9 @@
             }
             renderBillPreview(); updateBillGrandTotalDisplay();
             document.getElementById('s-qty').value = '';
-        };
+        }
 
-        window.renderBillPreview = function() {
+        function renderBillPreview() {
             const tbody = document.getElementById('bill-items-body');
             if (!currentBillItems.length) {
                 tbody.innerHTML = '<tr><td colspan="6"><div class="empty-state">No items added</div></td></tr>'; return;
@@ -1412,29 +1195,58 @@
                 <td>${i+1}</td><td><strong>${item.name}</strong></td><td>${item.qty} ${item.unit}</td><td>₹${item.price}</td><td><strong>₹${item.total}</strong></td>
                 <td><button onclick="removeFromBill(${i})" style="background:none;border:none;color:var(--red);">✕</button></td>
             </tr>`).join('');
-        };
+        }
 
-        window.removeFromBill = function(idx) { currentBillItems.splice(idx, 1); renderBillPreview(); updateBillGrandTotalDisplay(); };
-        
-        window.calculateBillTotals = function() {
+        function removeFromBill(idx) { currentBillItems.splice(idx, 1); renderBillPreview(); updateBillGrandTotalDisplay(); }
+        function calculateBillTotals() {
             const subtotal = currentBillItems.reduce((s, i) => s + i.total, 0);
             const discount = parseFloat(document.getElementById('bill-discount').value) || 0;
             return { subtotal, discount, grandTotal: Math.max(0, subtotal - discount) };
-        };
-        
-        window.updateBillGrandTotalDisplay = function() {
+        }
+        function updateBillGrandTotalDisplay() {
             document.getElementById('bill-grand-total-display').textContent = '₹' + calculateBillTotals().grandTotal.toFixed(2);
-        };
+        }
 
-        window.clearBill = function() {
+        function saveBill() {
+            if (!currentBillItems.length) return;
+            const custName = document.getElementById('cust-name').value.trim() || 'Walk-in Customer';
+            let custPhone = document.getElementById('cust-phone').value.trim();
+            if(custPhone === "+91") custPhone = ""; // empty phone handling
+            const billNo = document.getElementById('cust-billno').value;
+            const payment = document.getElementById('payment-type').value;
+            const totals = calculateBillTotals();
+            const now = new Date();
+            
+            const formattedIsoString = now.toISOString().split('T')[0];
+
+            const bill = {
+                id: Date.now(), billNo, custName, custPhone, items: [...currentBillItems], 
+                subtotal: totals.subtotal, discount: totals.discount, total: totals.grandTotal, payment,
+                isoDate: formattedIsoString,
+                date: now.toLocaleDateString('en-GB'), time: now.toLocaleTimeString('en-GB', {hour:'2-digit', minute:'2-digit'})
+            };
+
+            sales.push(bill);
+            currentBillItems.forEach(bi => {
+                const p = products.find(p => p.id === bi.prodId); if (p) p.stock -= bi.qty;
+            });
+
+            if (payment === 'udhar') {
+                khata.push({ id: Date.now(), name: custName, phone: custPhone, type: 'lena', amount: totals.grandTotal, note: 'Bill #' + billNo, isoDate: formattedIsoString, date: now.toLocaleDateString('en-GB', {day:'2-digit', month:'short'}) });
+            }
+
+            save(); openBillModal(bill); clearBill(); renderAll();
+        }
+
+        function clearBill() {
             currentBillItems = []; renderBillPreview();
             document.getElementById('cust-name').value = ''; document.getElementById('cust-phone').value = '+91';
             document.getElementById('bill-discount').value = '0'; 
             document.getElementById('bill-cust-dropdown').value = '';
             updateBillGrandTotalDisplay(); generateBillNo();
-        };
+        }
 
-        window.openBillModal = function(b) {
+        function openBillModal(b) {
             const rows = b.items.map((it, i) => `<tr><td>${i+1}</td><td>${it.name}</td><td>${it.qty}</td><td>₹${it.price}</td><td>₹${it.total}</td></tr>`).join('');
             document.getElementById('print-invoice-area').innerHTML = `
                 <div class="print-bill" style="padding:15px;">
@@ -1444,6 +1256,7 @@
                     <div class="bill-total"><div class="bill-total-row grand"><span>TOTAL:</span> <span>₹${b.total}</span></div></div>
                 </div>`;
             
+            // Modal Share Link Binding dynamically
             const whatsappBtn = document.getElementById('modal-whatsapp-btn');
             if(b.custPhone) {
                 whatsappBtn.style.display = "inline-flex";
@@ -1455,16 +1268,16 @@
             }
             
             document.getElementById('print-modal').classList.add('open');
-        };
+        }
+        function closePrintModal() { document.getElementById('print-modal').classList.remove('open'); }
 
-        window.closePrintModal = function() { document.getElementById('print-modal').classList.remove('open'); };
-
-        window.renderSalesTable = function() {
+        function renderSalesTable() {
             const tbody = document.getElementById('sales-table-body');
             if (!sales.length) {
                 tbody.innerHTML = '<tr><td colspan="6"><div class="empty-state">No bills found</div></td></tr>'; return;
             }
             tbody.innerHTML = [...sales].reverse().map(b => {
+                // Generate redirection link block inside rows list
                 let waButton = b.custPhone ? `<a href="${generateWhatsAppLink(b.custPhone, b.billNo, b.total)}" target="_blank" class="btn btn-whatsapp btn-sm" style="padding: 6px 8px;">💬</a>` : '';
                 return `<tr>
                     <td><strong>${b.billNo}</strong></td><td>${b.custName}</td><td>${b.items.length}</td><td>₹${b.total}</td>
@@ -1477,11 +1290,10 @@
                     </td>
                 </tr>`;
             }).join('');
-        };
+        }
 
-        window.showSavedBillInvoice = function(id) { const m = sales.find(s => s.id === id); if(m) openBillModal(m); };
-        
-        window.editBillModalPrompt = function(id) {
+        function showSavedBillInvoice(id) { const m = sales.find(s => s.id === id); if(m) openBillModal(m); }
+        function editBillModalPrompt(id) {
             const pin = prompt("🔑 Manager Password:"); if (pin !== securityKeys.manager) return;
             const b = sales.find(x => x.id === id); if(!b) return;
             document.getElementById('edit-bill-id').value = b.id;
@@ -1489,18 +1301,26 @@
             document.getElementById('edit-bill-total').value = b.total;
             document.getElementById('edit-bill-payment').value = b.payment;
             document.getElementById('edit-bill-modal').classList.add('open');
-        };
+        }
+        function saveEditedBill() {
+            const id = parseInt(document.getElementById('edit-bill-id').value);
+            sales = sales.map(b => b.id === id ? { ...b, custName: document.getElementById('edit-bill-name').value, total: parseFloat(document.getElementById('edit-bill-total').value), payment: document.getElementById('edit-bill-payment').value } : b);
+            save(); closeEditModal(); renderAll();
+        }
+        function closeEditModal() { document.getElementById('edit-bill-modal').classList.remove('open'); }
+        function deleteBill(id) {
+            if (prompt("🔑 Manager Password:") !== securityKeys.manager) return;
+            sales = sales.filter(b => b.id !== id); save(); renderAll();
+        }
 
-        window.closeEditModal = function() { document.getElementById('edit-bill-modal').classList.remove('open'); };
-
-        window.toggleKhataProfileMode = function() {
+        function toggleKhataProfileMode() {
             const isExisting = document.getElementById('profile-existing').checked;
             document.getElementById('khata-name-input-wrap').style.display = isExisting ? 'none' : 'block';
             document.getElementById('khata-name-select-wrap').style.display = isExisting ? 'block' : 'none';
             if(isExisting) populateKhataDropdown();
-        };
+        }
 
-        window.calculateLedgerBalances = function() {
+        function calculateLedgerBalances() {
             let mapping = {};
             khata.forEach(k => {
                 if(!mapping[k.name]) mapping[k.name] = { balance: 0, phone: k.phone || '' };
@@ -1510,27 +1330,45 @@
                 else if(k.type === 'paid') mapping[k.name].balance += k.amount;
             });
             return mapping;
-        };
+        }
 
-        window.populateKhataDropdown = function() {
+        function populateKhataDropdown() {
             const dropdown = document.getElementById('k-name-dropdown');
             if(!dropdown) return;
             const balances = calculateLedgerBalances();
             let keys = Object.keys(balances);
             if(!keys.length) { dropdown.innerHTML = '<option value="">-- No Accounts --</option>'; return; }
             dropdown.innerHTML = '<option value="">-- Choose Account --</option>' + keys.map(n => `<option value="${n}" data-phone="${balances[n].phone}" data-bal="${balances[n].balance}">${n} (Bal: ₹${balances[n].balance})</option>`).join('');
-        };
+        }
 
-        window.handleKhataDropdownChange = function() {
+        function handleKhataDropdownChange() {
             const d = document.getElementById('k-name-dropdown');
             const o = d.options[d.selectedIndex]; if(!o || d.value === "") return;
             document.getElementById('k-phone').value = o.dataset.phone || '+91';
             let b = parseFloat(o.dataset.bal) || 0;
             document.getElementById('k-type').value = b > 0 ? "received" : "paid";
             document.getElementById('k-amount').value = Math.abs(b);
-        };
+        }
 
-        window.renderKhataTable = function() {
+        function saveKhata() {
+            const isExisting = document.getElementById('profile-existing').checked;
+            let name = isExisting ? document.getElementById('k-name-dropdown').value : document.getElementById('k-name').value.trim();
+            let phone = document.getElementById('k-phone').value.trim();
+            if(phone === "+91") phone = "";
+            const type = document.getElementById('k-type').value;
+            const amount = parseFloat(document.getElementById('k-amount').value) || 0;
+            const note = document.getElementById('k-note').value.trim();
+            const isoStringDate = new Date().toISOString().split('T')[0];
+
+            if (!name || amount <= 0) return;
+            khata.push({ id: Date.now(), name, phone, type, amount, note, isoDate: isoStringDate, date: new Date().toLocaleDateString('en-GB', {day:'2-digit', month:'short'}) });
+            save(); renderKhataTable(); populateKhataDropdown(); populateBillCustomerDropdown(); updateDashboard();
+            ['k-name','k-phone','k-amount','k-note'].forEach(id => { if(document.getElementById(id)) document.getElementById(id).value = ''; });
+            if(document.getElementById('k-phone')) document.getElementById('k-phone').value = '+91';
+            showToast('✅ Khata Entry Saved!');
+        }
+
+        function renderKhataTable() {
             const tbody = document.getElementById('khata-table-body');
             if (!khata.length) {
                 tbody.innerHTML = '<tr><td colspan="6"><div class="empty-state">No entries</div></td></tr>'; return;
@@ -1545,9 +1383,20 @@
                 <td><button class="btn btn-red btn-sm" onclick="deleteKhata(${k.id})">🗑️</button></td>
             </tr>`).join('');
             document.getElementById('ledger-summary').textContent = `Lena: ₹${totalLena} | Dena: ₹${totalDena}`;
-        };
+        }
+        function deleteKhata(id) { khata = khata.filter(k => k.id !== id); save(); renderKhataTable(); populateKhataDropdown(); populateBillCustomerDropdown(); updateDashboard(); }
 
-        window.renderExpenseTable = function() {
+        function saveExpense() {
+            const category = document.getElementById('e-category').value;
+            const amount = parseFloat(document.getElementById('e-amount').value) || 0;
+            const note = document.getElementById('e-note').value.trim();
+            const date = document.getElementById('e-date').value;
+            if (amount <= 0 || !date) return;
+            expenses.push({ id: Date.now(), category, amount, note, date });
+            save(); renderExpenseTable();
+            document.getElementById('e-amount').value = ''; document.getElementById('e-note').value = '';
+        }
+        function renderExpenseTable() {
             const tbody = document.getElementById('expense-table-body');
             const total = expenses.reduce((s, e) => s + e.amount, 0);
             document.getElementById('expense-total').textContent = 'Total: ₹' + total;
@@ -1556,9 +1405,10 @@
                 <td><strong>${e.category}</strong></td><td>₹${e.amount}</td><td>${e.note||'—'}</td><td>${e.date}</td>
                 <td><button class="btn btn-red btn-sm" onclick="deleteExpense(${e.id})">🗑️</button></td>
             </tr>`).join('');
-        };
+        }
+        function deleteExpense(id) { expenses = expenses.filter(e => e.id !== id); save(); renderExpenseTable(); }
 
-        window.updateDashboard = function() {
+        function updateDashboard() {
             const paidSales = sales.reduce((s, b) => s + b.total, 0);
             document.getElementById('dash-sales').textContent = '₹' + paidSales;
             let balances = calculateLedgerBalances(), totalLena = 0;
@@ -1568,21 +1418,30 @@
             const low = products.filter(p => p.stock <= p.limit);
             document.getElementById('dash-low-list').innerHTML = low.length === 0 ? '<li>✅ Stock OK</li>' : low.map(p => `<li>${p.name} (${p.stock} left)</li>`).join('');
             document.getElementById('dash-sales-list').innerHTML = sales.slice(-3).map(b => `<div>${b.billNo}: ₹${b.total}</div>`).join('');
-        };
+        }
 
-        window.unlockPL = function() {
+        function injectManualCost() {
+            const amt = parseFloat(document.getElementById('pl-manual-cost-input').value) || 0;
+            const mDate = document.getElementById('pl-manual-cost-date').value;
+            if(amt <= 0 || !mDate) return;
+            manualCosts.push({ id: Date.now(), amount: amt, note: document.getElementById('pl-manual-cost-note').value.trim(), date: mDate });
+            save(); document.getElementById('pl-manual-cost-input').value = ''; document.getElementById('pl-manual-cost-note').value = '';
+            calculateAndDisplayPL();
+        }
+        
+        function unlockPL() {
             if (document.getElementById('pl-pin').value !== securityKeys.owner) return;
             document.getElementById('pl-locked').style.display = 'none'; document.getElementById('pl-content').style.display = 'block';
             calculateAndDisplayPL();
-        };
+        }
 
-        window.togglePLDateMode = function() {
+        function togglePLDateMode() {
             const customModeChecked = document.getElementById('pl-range-custom').checked;
             document.getElementById('pl-date-pickers-row').style.display = customModeChecked ? 'grid' : 'none';
             calculateAndDisplayPL();
-        };
+        }
 
-        window.calculateAndDisplayPL = function() {
+        function calculateAndDisplayPL() {
             const isCustomRange = document.getElementById('pl-range-custom').checked;
             let startRangeStr = document.getElementById('pl-start-date').value;
             let endRangeStr = document.getElementById('pl-end-date').value;
@@ -1649,14 +1508,15 @@
                     <td style="color:${computedNetProfit >= 0 ? 'var(--green)' : 'var(--red)'}">₹${computedNetProfit.toFixed(2)}</td>
                 </tr>
             `;
-        };
+        }
 
-        window.showToast = function(msg, color = 'green') {
+        function showToast(msg, color = 'green') {
             const el = document.getElementById('toast'); el.textContent = msg;
             el.style.background = color === 'red' ? 'var(--red)' : 'var(--ink)';
             el.style.display = 'flex'; setTimeout(() => { el.style.display = 'none'; }, 2000);
-        };
+        }
 
+        window.onload = init;
     </script>
 </body>
 </html>
